@@ -15,7 +15,7 @@
       bindToController : true,
       controller       : 'KeyTableController',
       controllerAs     : 'keytable',
-      templateUrl      : 'directives/keytable.html',
+      templateUrl      : '/directives/keytable.html',
       link: link
     };
     return directive;

@@ -14,7 +14,7 @@
         heading  : '@'
       },
       transclude  : true,
-      templateUrl : 'directives/tab.html',
+      templateUrl : '/directives/tab.html',
       link        : link,
     };
     return directive;
