@@ -1,48 +1,47 @@
 # BEHAVIOR3EDITOR
 
-![interface preview](preview.png)
+![界面预览](preview.png)
 
-**Behavior3 Editor** is the official visual editor for the **Behavior3** libraries. It can be accessed online or you can download it to have handle local projects.
-
-
-## Why Behavior3 Editor?
-
-Why should you use b3editor? What is different from other editors? Can it compete against commercial alternatives? - Well, check it out some characteristics of Behavior3 Editor:
-
-- **Open Source Software**: under MIT license, you can use this software freely, adapt it to your need and even use a specialized internal version in your company. You can also contribute with bug fixes, suggestions and patches to make it better.
-
-- **Open Format**: b3editor can export the modeled trees to JSON files, following an open format. If there is no official reader on your favorite language yet, you can develop your own library and use the trees created here. 
-
-- **Formality**: the editor works above the basis created by Behavior3JS, which in turn is based on formal description of behavior trees. Thus, the editor provides a stable solution to model agents for your games or other applications such as robotics and simulations in general.
-
-- **Focus on Usability**: intuitiveness is the key word of b3editor. We focus on providing an easy, clean, and intuitive tool for programmers and non-programmers. If there is something obscure or too difficult to use, report it immediately!
-
-- **Minimalist, but Functional**: b3editor follows a minimalist style, trying to reduce the amount of non-essential information presented on the screen. We focus on the important things: designing Behavior Trees. 
-
-- **Customizable**: create your own node types and customize nodes instances individually. Create several projects and trees, change titles and add properties.
-
-- **Big Projects Ahead**: we are working towards a collaborative tool in order to provide an awesome editor for big projects involving several designers working together. 
-
-- **Does not depends on other tools/editors/engines**.
+**Behavior3 Editor** 是 **Behavior3** 系列库的官方可视化编辑器。你可以在线访问，也可以下载到本地来管理本地项目。
 
 
+## 为什么选择 Behavior3 Editor？
 
-## Main features
+为什么要使用 b3editor？它与其他编辑器有什么不同？能否与商业替代品竞争？来看看 Behavior3 Editor 的一些特点：
 
-- **Custom Nodes**: you can create your own node types inside one of the four basic categories - *composite*, *decorator*, *action* or *condition*. 
-- **Individual Node Properties**: you can modify node titles, description and custom properties.
-- **Manual and Auto Organization**: organize by dragging nodes around or just type "a" to auto organize the whole tree.
-- **Create and Manage Multiple Trees**: you can create and manage an unlimited number of trees.
-- **Import and Export to JSON**: export your project, tree or nodes to JSON format. Import them back. Use JSON on your own custom library or tool. You decide.
+- **开源软件**：基于 MIT 许可证，你可以自由使用本软件，根据需求进行修改，甚至在公司内部使用定制版本。你也可以通过提交 bug 修复、建议和补丁来帮助改进它。
+
+- **开放格式**：b3editor 可以将建模的行为树导出为 JSON 文件，遵循开放格式。如果你喜欢的编程语言还没有官方解析库，你可以开发自己的库来使用这里创建的行为树。
+
+- **形式化**：编辑器基于 Behavior3JS 构建，而 Behavior3JS 又基于行为树的形式化描述。因此，编辑器为游戏或其他应用（如机器人和通用仿真）中的智能体建模提供了稳定的解决方案。
+
+- **注重易用性**：直观是 b3editor 的关键词。我们专注于为程序员和非程序员提供简单、清晰、直观的工具。如果有任何晦涩或难以使用的地方，请立即反馈！
+
+- **简约而实用**：b3editor 遵循简约风格，尽量减少屏幕上非必要信息的展示。我们专注于重要的事情：设计行为树。
+
+- **可定制**：创建你自己的节点类型，并单独定制节点实例。创建多个项目和行为树，修改标题并添加属性。
+
+- **大型项目展望**：我们正在开发协作工具，以便为涉及多位设计师协同工作的大型项目提供出色的编辑器。
+
+- **不依赖其他工具/编辑器/引擎**。
 
 
-## Limitations
 
-Nothing is perfect =( . Behavior3 Editor focus on Chrome (thus, working pretty well on Opera too), so it have some incompatibilities with Firefox, such as the image preview lag when dragging to create a node for the first time, and the ugly scroll bar inside the panels. Not tested on IE!
+## 主要功能
+
+- **自定义节点**：你可以在四个基本类别中创建自己的节点类型——*组合节点（composite）*、*装饰节点（decorator）*、*动作节点（action）* 或 *条件节点（condition）*。
+- **节点独立属性**：你可以修改节点标题、描述和自定义属性。
+- **手动和自动排列**：通过拖拽节点进行手动排列，或按 "a" 键自动排列整棵树。
+- **创建和管理多棵树**：你可以创建和管理无限数量的行为树。
+- **JSON 导入导出**：将项目、行为树或节点导出为 JSON 格式，也可以重新导入。在你自己的库或工具中使用 JSON，由你决定。
 
 
-## Looking for Behavior Tree Libraries?
+## 局限性
+
+没有什么是完美的 =(。Behavior3 Editor 主要针对 Chrome 浏览器（因此在 Opera 上也运行良好），所以在 Firefox 上存在一些兼容性问题，例如首次拖拽创建节点时的图片预览延迟，以及面板内滚动条样式问题。未在 IE 上测试！
+
+
+## 寻找行为树库？
 
 - https://github.com/behavior3/behavior3js
 - https://github.com/behavior3/behavior3py
-
