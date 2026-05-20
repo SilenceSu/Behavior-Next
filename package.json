@@ -15,7 +15,6 @@
   "devDependencies": {
     "@electron/packager": "^18.3.5",
     "@vitejs/plugin-vue": "^6.0.7",
-    "bootstrap": "^3.4.1",
     "clean-css": "^5.3.3",
     "font-awesome": "^4.7.0",
     "less": "^4.2.2",

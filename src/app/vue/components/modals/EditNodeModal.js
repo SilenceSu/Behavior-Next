@@ -108,19 +108,19 @@ export var EditNodeModal = {
     '      <div class="b3modal-wrap">' +
     '        <h1 class="b3modal-title">{{ action }} node</h1>' +
     '        <div class="b3modal-content">' +
-    '          <div class="row">' +
-    '            <div class="form-group col-md-4" :class="{\'has-error\': invalidName}">' +
-    '              <label for="name" class="control-label">Name</label>' +
-    '              <input type="text" class="form-control" name="name" v-model="node.name" required autofocus>' +
-    '              <p class="help-block" v-if="blacklist.indexOf(node.name) !== -1">Node already exists</p>' +
+    '          <div class="b3-layout">' +
+    '            <div class="b3-field b3-span-4" :class="{\'b3-field-error\': invalidName}">' +
+    '              <label for="name" class="b3-field-label">Name</label>' +
+    '              <input type="text" class="b3-input" name="name" v-model="node.name" required autofocus>' +
+    '              <p class="b3-help" v-if="blacklist.indexOf(node.name) !== -1">Node already exists</p>' +
     '            </div>' +
-    '            <div class="form-group col-md-4">' +
-    '              <label for="title" class="control-label">Title</label>' +
-    '              <input type="text" class="form-control" name="title" v-model="node.title">' +
+    '            <div class="b3-field b3-span-4">' +
+    '              <label for="title" class="b3-field-label">Title</label>' +
+    '              <input type="text" class="b3-input" name="title" v-model="node.title">' +
     '            </div>' +
-    '            <div class="form-group col-md-4">' +
-    '              <label for="category" class="control-label">Category</label>' +
-    '              <select class="form-control" v-model="node.category" :disabled="!!original">' +
+    '            <div class="b3-field b3-span-4">' +
+    '              <label for="category" class="b3-field-label">Category</label>' +
+    '              <select class="b3-input" v-model="node.category" :disabled="!!original">' +
     '                <option value="composite">Composite</option>' +
     '                <option value="decorator">Decorator</option>' +
     '                <option value="action">Action</option>' +
@@ -128,21 +128,21 @@ export var EditNodeModal = {
     '              </select>' +
     '            </div>' +
     '          </div>' +
-    '          <div class="row">' +
-    '            <div class="form-group col-md-6">' +
-    '              <label for="description" class="control-label">Description</label>' +
-    '              <textarea name="description" class="form-control" rows="14" v-model="node.description"></textarea>' +
+    '          <div class="b3-layout">' +
+    '            <div class="b3-field b3-span-6">' +
+    '              <label for="description" class="b3-field-label">Description</label>' +
+    '              <textarea name="description" class="b3-input" rows="14" v-model="node.description"></textarea>' +
     '            </div>' +
-    '            <div class="form-group col-md-6">' +
+    '            <div class="b3-field b3-span-6">' +
     '              <KeyTable heading="Properties" :model-value="node.properties" @update:model-value="updateProperties"></KeyTable>' +
     '            </div>' +
     '          </div>' +
     '        </div>' +
     '      </div>' +
     '      <div class="b3modal-buttons">' +
-    '        <input type="button" class="btn btn-danger btn-lg pull-left" @click="remove" value="Remove" v-if="original">' +
-    '        <input type="button" class="btn btn-default btn-lg" @click="close" value="Cancel">' +
-    '        <button type="submit" class="btn btn-success btn-lg" :disabled="invalidName">Save</button>' +
+    '        <input type="button" class="b3-button b3-button-danger b3-button-large b3-float-left" @click="remove" value="Remove" v-if="original">' +
+    '        <input type="button" class="b3-button b3-button-neutral b3-button-large" @click="close" value="Cancel">' +
+    '        <button type="submit" class="b3-button b3-button-confirm b3-button-large" :disabled="invalidName">Save</button>' +
     '      </div>' +
     '    </form>' +
     '  </div>' +

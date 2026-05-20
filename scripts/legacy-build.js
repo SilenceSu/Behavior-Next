@@ -21,7 +21,6 @@ const vendorJs = [
 ];
 
 const vendorCss = [
-  'node_modules/bootstrap/dist/css/bootstrap.min.css',
   'node_modules/sweetalert/dist/sweetalert.css'
 ];
 

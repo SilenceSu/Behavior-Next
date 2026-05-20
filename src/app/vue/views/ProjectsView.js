@@ -161,29 +161,29 @@ export var ProjectsView = {
     '  <nav class="page-operations">' +
     '    <div class="page-operations-content">' +
     '      <ul>' +
-    '        <li v-if="isDesktop"><button class="btn-default" @click="openProject()"><i class="fa fa-folder-open-o"></i> Open Project</button></li>' +
-    '        <li><button class="btn-success" @click="newProject()"><i class="fa fa-plus"></i> New Project</button></li>' +
+    '        <li v-if="isDesktop"><button class="b3-button b3-button-neutral" @click="openProject()"><i class="fa fa-folder-open-o"></i> Open Project</button></li>' +
+    '        <li><button class="b3-button b3-button-confirm" @click="newProject()"><i class="fa fa-plus"></i> New Project</button></li>' +
     '      </ul>' +
     '    </div>' +
     '  </nav>' +
     '  <div class="content">' +
     "    <div v-if=\"!projectsState.recentProjects.length\"><p>You don't have any project yet.</p></div>" +
-    '    <table class="table table-striped" v-if="projectsState.recentProjects.length">' +
-    '      <tr v-for="(item, index) in projectsState.recentProjects" :key="index" :class="{info:item.isOpen}">' +
-    '        <td v-if="item.isOpen" class="info">' +
-    '          <div class="btn-group pull-right" role="group">' +
-    '            <router-link class="btn btn-info" to="/editor"><i class="fa fa-arrow-circle-o-left"></i> Editor</router-link>' +
-    '            <button type="button" class="btn btn-success" @click="saveProject()"><i class="fa fa-save"></i> Save</button>' +
-    '            <button type="button" class="btn btn-default" @click="editProject()"><i class="fa fa-pencil"></i> Rename</button>' +
-    '            <button type="button" class="btn btn-default" @click="closeProject()"><i class="fa fa-close"></i> Close</button>' +
+    '    <table class="b3-data-sheet b3-data-sheet-striped" v-if="projectsState.recentProjects.length">' +
+    '      <tr v-for="(item, index) in projectsState.recentProjects" :key="index" :class="{\'b3-state-current\': item.isOpen}">' +
+    '        <td v-if="item.isOpen" class="b3-state-current">' +
+    '          <div class="b3-action-group b3-float-right" role="group">' +
+    '            <router-link class="b3-button b3-button-accent" to="/editor"><i class="fa fa-arrow-circle-o-left"></i> Editor</router-link>' +
+    '            <button type="button" class="b3-button b3-button-confirm" @click="saveProject()"><i class="fa fa-save"></i> Save</button>' +
+    '            <button type="button" class="b3-button b3-button-neutral" @click="editProject()"><i class="fa fa-pencil"></i> Rename</button>' +
+    '            <button type="button" class="b3-button b3-button-neutral" @click="closeProject()"><i class="fa fa-close"></i> Close</button>' +
     '          </div>' +
     '          <small><em>Current project</em></small>' +
     '          <h3 class="current-project">{{ item.name }}</h3>' +
     '        </td>' +
     '        <td v-else>' +
-    '          <div class="btn-group pull-right" role="group">' +
-    '            <button type="button" class="btn btn-info btn-sm" @click="openProject(item.path)"><i class="fa fa-folder-open-o"></i> Open</button>' +
-    '            <button type="button" class="btn btn-danger btn-sm" @click="removeProject(item.path)"><i class="fa fa-trash-o"></i> Remove</button>' +
+    '          <div class="b3-action-group b3-float-right" role="group">' +
+    '            <button type="button" class="b3-button b3-button-accent b3-button-small" @click="openProject(item.path)"><i class="fa fa-folder-open-o"></i> Open</button>' +
+    '            <button type="button" class="b3-button b3-button-danger b3-button-small" @click="removeProject(item.path)"><i class="fa fa-trash-o"></i> Remove</button>' +
     '          </div>' +
     '          <p>{{ item.name }}</p>' +
     '        </td>' +

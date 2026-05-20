@@ -93,11 +93,11 @@ export var ExportModal = {
     '      <div class="b3modal-content"><pre id="export-result">{{ result || "Loading..." }}</pre></div>' +
     '    </div>' +
     '    <div class="b3modal-buttons">' +
-    '      <button class="btn btn-default btn-lg pull-left" style="margin-right:10px" @click="select">Select result</button>' +
-    '      <button class="btn btn-default btn-lg pull-left" style="margin-right:10px" v-if="!hideCompact && result !== compact" @click="result = compact">Compact</button>' +
-    '      <button class="btn btn-default btn-lg pull-left" style="margin-right:10px" v-if="!hideCompact && result !== pretty" @click="result = pretty">Pretty</button>' +
-    '      <button class="btn btn-default btn-lg pull-left" v-if="isDesktop" @click="save">Save</button>' +
-    '      <button class="btn btn-info btn-lg" @click="close">Ok</button>' +
+    '      <button class="b3-button b3-button-neutral b3-button-large b3-float-left b3-gap-right" @click="select">Select result</button>' +
+    '      <button class="b3-button b3-button-neutral b3-button-large b3-float-left b3-gap-right" v-if="!hideCompact && result !== compact" @click="result = compact">Compact</button>' +
+    '      <button class="b3-button b3-button-neutral b3-button-large b3-float-left b3-gap-right" v-if="!hideCompact && result !== pretty" @click="result = pretty">Pretty</button>' +
+    '      <button class="b3-button b3-button-neutral b3-button-large b3-float-left" v-if="isDesktop" @click="save">Save</button>' +
+    '      <button class="b3-button b3-button-accent b3-button-large" @click="close">Ok</button>' +
     '    </div>' +
     '  </div>' +
     '</div>'

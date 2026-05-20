@@ -75,20 +75,20 @@ export var KeyTable = {
   },
 
   template: '' +
-    '<table class="table table-condensed keytable">' +
+    '<table class="b3-data-sheet b3-data-sheet-compact keytable">' +
     '  <thead>' +
     '    <tr>' +
     '      <th colspan="3">' +
-    '        <input type="button" class="btn btn-success btn-xs pull-right" value="+" @click="add()">' +
-    '        <label class="control-label">{{ heading }}</label>' +
+    '        <input type="button" class="b3-button b3-button-confirm b3-button-xsmall b3-float-right" value="+" @click="add()">' +
+    '        <label class="b3-field-label">{{ heading }}</label>' +
     '      </th>' +
     '    </tr>' +
     '  </thead>' +
     '  <tbody>' +
     '    <tr v-for="(item, index) in rows" :key="index">' +
-    '      <td><input type="text" class="form-control" placeholder="key" :disabled="item.fixed" v-model="item.key" @input="change"></td>' +
-    '      <td><input type="text" class="form-control" placeholder="value" v-model="item.value" @input="change"></td>' +
-    '      <td class="text-right"><input type="button" class="btn btn-danger btn-xs" :disabled="item.fixed" @click="remove(index)" value="-"></td>' +
+    '      <td><input type="text" class="b3-input" placeholder="key" :disabled="item.fixed" v-model="item.key" @input="change"></td>' +
+    '      <td><input type="text" class="b3-input" placeholder="value" v-model="item.value" @input="change"></td>' +
+    '      <td class="b3-align-right"><input type="button" class="b3-button b3-button-danger b3-button-xsmall" :disabled="item.fixed" @click="remove(index)" value="-"></td>' +
     '    </tr>' +
     '  </tbody>' +
     '</table>'

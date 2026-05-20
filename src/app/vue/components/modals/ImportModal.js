@@ -75,12 +75,12 @@ export var ImportModal = {
     '  <div class="b3modal-window">' +
     '    <div class="b3modal-wrap">' +
     '      <h1 class="b3modal-title">Import {{ type }} from {{ format }}</h1>' +
-    '      <div class="b3modal-content"><textarea class="form-control" rows="20" placeholder="Put your data here" v-model="data"></textarea></div>' +
+    '      <div class="b3modal-content"><textarea class="b3-input" rows="20" placeholder="Put your data here" v-model="data"></textarea></div>' +
     '    </div>' +
     '    <div class="b3modal-buttons">' +
-    '      <button class="btn btn-default btn-lg pull-left" v-if="isDesktop" @click="loadFromFile">Load from file</button>' +
-    '      <button class="btn btn-default btn-lg" @click="close">Cancel</button>' +
-    '      <button class="btn btn-info btn-lg" @click="open">Import</button>' +
+    '      <button class="b3-button b3-button-neutral b3-button-large b3-float-left" v-if="isDesktop" @click="loadFromFile">Load from file</button>' +
+    '      <button class="b3-button b3-button-neutral b3-button-large" @click="close">Cancel</button>' +
+    '      <button class="b3-button b3-button-accent b3-button-large" @click="open">Import</button>' +
     '    </div>' +
     '  </div>' +
     '</div>'

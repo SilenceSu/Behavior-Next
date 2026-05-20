@@ -103,20 +103,20 @@ export var PropertiesPanel = {
     '<div class="full-height side-panel">' +
     '  <div class="title">Properties</div>' +
     '  <div v-if="!block" class="properties">' +
-    '    <p class="text-center">Select a <strong>single</strong> block to change its properties.</p>' +
-    '    <p class="text-center"><em>NOTE: The root node represents a tree. Therefore, changes applied to this node will persist on the tree object.</em></p>' +
+    '    <p class="b3-align-center">Select a <strong>single</strong> block to change its properties.</p>' +
+    '    <p class="b3-align-center"><em>NOTE: The root node represents a tree. Therefore, changes applied to this node will persist on the tree object.</em></p>' +
     '  </div>' +
     '  <div v-else class="properties">' +
     '    <form>' +
-    '      <div class="form-group">' +
+    '      <div class="b3-field">' +
     '        <label for="title">Title</label>' +
-    '        <input type="text" class="form-control" name="title" placeholder="Title" @keydown="keydown" v-model="block.title" @input="update">' +
+    '        <input type="text" class="b3-input" name="title" placeholder="Title" @keydown="keydown" v-model="block.title" @input="update">' +
     '      </div>' +
-    '      <div class="form-group">' +
+    '      <div class="b3-field">' +
     '        <label for="description">Description</label>' +
-    '        <textarea name="description" rows="4" class="form-control" placeholder="Description" @keydown="keydown" v-model="block.description" @input="update"></textarea>' +
+    '        <textarea name="description" rows="4" class="b3-input" placeholder="Description" @keydown="keydown" v-model="block.description" @input="update"></textarea>' +
     '      </div>' +
-    '      <div class="form-group">' +
+    '      <div class="b3-field">' +
     '        <KeyTable heading="Properties" :model-value="block.properties" @update:model-value="updateProperties" class="no-border"></KeyTable>' +
     '      </div>' +
     '    </form>' +

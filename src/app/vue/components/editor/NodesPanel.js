@@ -132,19 +132,19 @@ export var NodesPanel = {
     '<div class="full-height side-panel">' +
     '  <div class="node-list">' +
     '    <div class="title">' +
-    '      <a class="new btn btn-link btn-xs" style="display:none" @click="newTree">New</a>' +
+    '      <a class="new b3-button b3-button-plain b3-button-xsmall" style="display:none" @click="newTree">New</a>' +
     '      <a>Trees</a>' +
     '    </div>' +
     '    <div class="node-list-content">' +
     '      <div class="node-list-category"><ul>' +
     '        <li v-for="tree in trees" :key="tree.id">' +
-    '          <a class="remove btn btn-link btn-xs" style="display:none" @click="remove(tree.id)">Remove</a>' +
+    '          <a class="remove b3-button b3-button-plain b3-button-xsmall" style="display:none" @click="remove(tree.id)">Remove</a>' +
     '          <a :data-name="tree.id" :class="{active:tree.active}" @click="select(tree.id)" v-drag-node="tree.id">{{ tree.name }}</a>' +
     '        </li>' +
     '      </ul></div>' +
     '    </div>' +
     '    <div class="title">' +
-    '      <router-link class="new btn btn-link btn-xs" style="display:none" to="/editor/node">New</router-link>' +
+    '      <router-link class="new b3-button b3-button-plain b3-button-xsmall" style="display:none" to="/editor/node">New</router-link>' +
     '      <a>Nodes</a>' +
     '    </div>' +
     '    <div class="node-list-content">' +
@@ -152,7 +152,7 @@ export var NodesPanel = {
     '        <div class="node-list-title">{{ category }}s</div>' +
     '        <ul>' +
     '          <li v-for="node in nodes[category]" :key="node.name">' +
-    '            <router-link v-if="!node.isDefault" class="edit btn btn-link btn-xs" style="display:none" :to="\'/editor/node/\' + encodeURIComponent(node.name)">Edit</router-link>' +
+    '            <router-link v-if="!node.isDefault" class="edit b3-button b3-button-plain b3-button-xsmall" style="display:none" :to="\'/editor/node/\' + encodeURIComponent(node.name)">Edit</router-link>' +
     '            <a class="no-select" :data-name="node.name" v-drag-node="node.name">{{ node.title }}</a>' +
     '          </li>' +
     '        </ul>' +
