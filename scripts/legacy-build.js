@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const CleanCSS = require('clean-css');
 const less = require('less');
+const vue = require('@vitejs/plugin-vue');
 const UglifyJS = require('uglify-js');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -14,10 +15,8 @@ const vendorJs = [
   'src/assets/libs/creatine-1.0.0.min.js',
   'src/assets/libs/behavior3js-0.1.0.min.js',
   'src/assets/libs/mousetrap.min.js',
-  'node_modules/angular/angular.min.js',
-  'node_modules/angular-animate/angular-animate.min.js',
-  'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
-  'node_modules/@uirouter/angularjs/release/angular-ui-router.min.js',
+  'node_modules/vue/dist/vue.global.prod.js',
+  'node_modules/vue-router/dist/vue-router.global.prod.js',
   'node_modules/sweetalert/dist/sweetalert.min.js'
 ];
 
@@ -46,16 +45,17 @@ const appModuleSources = [
   'src/start.js',
   'src/modules/**/*.js',
   'src/editor/**/*.js',
-  'src/app/**/*.js'
+  'src/app/**/*.js',
+  'src/app/**/*.vue'
 ];
 
 const appLess = 'src/assets/less/index.less';
 const appImgs = ['src/assets/imgs/**/*'];
-const appHtml = ['src/app/**/*.html'];
 const appEntry = [
   'src/index.html',
   'src/package.json',
-  'src/desktop.js'
+  'src/desktop.js',
+  'src/preload-electron.js'
 ];
 
 const watchGlobs = [
@@ -68,7 +68,6 @@ const watchGlobs = [
   appLess,
   'src/assets/less/**/*.less',
   ...appImgs,
-  ...appHtml,
   ...appEntry,
   'package.json'
 ];
@@ -208,6 +207,7 @@ async function buildAppModule(outputPath, options) {
       moduleSideEffects: true
     },
     plugins: [
+      vue(),
       {
         name: 'behavior3-build-metadata',
         transform(code, id) {
@@ -277,22 +277,6 @@ function minifyHtml(source) {
     .trim();
 }
 
-function buildTemplates(metadata) {
-  const appRoot = 'src/app/';
-  const lines = [
-    "angular.module('templates', []).run(['$templateCache', function($templateCache) {"
-  ];
-
-  for (const file of expand(appHtml)) {
-    const cacheKey = `/${file.slice(appRoot.length)}`;
-    const template = minifyHtml(replaceBuildMetadata(readText(file), metadata));
-    lines.push(`  $templateCache.put(${JSON.stringify(cacheKey)}, ${JSON.stringify(template)});`);
-  }
-
-  lines.push('}]);');
-  writeText('js/templates.min.js', minifyJs(lines.join('\n'), 'js/templates.min.js'));
-}
-
 function copyImages() {
   for (const file of expand(appImgs)) {
     copyFile(file, file.replace(/^src\/assets\//, ''));
@@ -335,7 +319,6 @@ async function buildAll(options) {
   });
   await buildLess('css/app.min.css');
   copyImages();
-  buildTemplates(metadata);
   copyEntryFiles(metadata);
 }
 

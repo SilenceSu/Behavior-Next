@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const vue = require('@vitejs/plugin-vue');
 const {
   buildAll,
   isWatchedSource,
@@ -98,6 +99,7 @@ module.exports = function createConfig(env) {
       }
     },
     plugins: [
+      vue(),
       legacyBuildPlugin()
     ]
   };

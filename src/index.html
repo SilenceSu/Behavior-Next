@@ -10,7 +10,7 @@
   <script type="text/javascript" src="js/preload.min.js"></script>
 </head>
 
-<body ng-controller="AppController as app">
+<body>
   
   <!-- PRELOAD PAGE -->
   <div id="page-preload" class="preloading">
@@ -29,9 +29,7 @@
   <!-- END PRELOAD PAGE -->
   
   <!-- APP PAGE -->
-  <div class="app">
-    <div ui-view class="app-anim"></div>
-  </div>
+  <div id="app" class="app"></div>
   <!-- END APP PAGE -->
 
 </body>
@@ -50,9 +48,6 @@
 
 <script>preloadProgress('Loading app libraries...');</script>
 <script type="text/javascript" src="js/app.min.js"></script>
-
-<script>preloadProgress('Loading templates...');</script>
-<script type="text/javascript" src="js/templates.min.js"></script>
 
 <script>preloadProgress('Starting application... Have Fun!');</script>
 <script>startApp();</script>

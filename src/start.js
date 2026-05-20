@@ -3,12 +3,11 @@ import {
   root,
   setEditor
 } from './modules/compatibility.js';
+import { mountVueApp } from './app/vue/main.js';
 
 function startApp() {
-  var domProgress = document.getElementById('page-preload');
-  
   setEditor(new root.b3e.editor.Editor());
-  root.angular.bootstrap(root.document, ['app']);
+  mountVueApp('#app');
 }
 
 exposeStartApp(startApp);

@@ -1,6 +1,6 @@
 import './modules/compatibility.js';
 import './modules/editor-engine.js';
-import './modules/angular-app.js';
+import './app/vue/main.js';
 import { startApp } from './start.js';
 
 export {
