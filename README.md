@@ -53,38 +53,39 @@
 **必需：**
 - [NodeJS](https://nodejs.org)
 
-*如果你需要运行/构建桌面版本：*
-- [Node-Webkit](http://nwjs.io)
-- [Node-Webkit Builder](https://github.com/nwjs/nw-builder)
+*如果你需要构建桌面版本：*
+- Electron 由 npm optional dependency 安装
 
 
 ### 配置
 
-在构建之前，你需要安装一些第三方库。在控制台中运行以下命令：
+在构建之前，你需要安装第三方库。在控制台中运行以下命令：
 
     npm install
 
-该命令会安装一系列 NodeJS 模块，用于构建系统以及桌面应用的一些依赖。
+该命令会安装运行时依赖、Vite 构建工具和桌面应用打包依赖。
 
 
 ### 开发环境构建
 
 在开发过程中，你可以在浏览器中运行编辑器，并自动构建和重新加载：
 
-    gulp serve
+    npm run dev
 
 这将在 `http://127.0.0.1:8000` 上启动一个 Web 服务器。
 
-运行桌面版本（不支持自动构建和重新加载）：
+如果只想生成 `build/` 目录中的 Web 静态产物：
 
-    gulp nw
+    npm run build
 
 
 ### 生产版本构建
 
 只需运行：
 
-    gulp dist
+    npm run dist
+
+该命令会先执行生产构建，再将 Electron 桌面应用打包到 `dist/`。
 
 
 ## 寻找行为树库？

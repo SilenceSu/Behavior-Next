@@ -1,6 +1,6 @@
 # Building Behavior3 Editor
 
-You can build the editor in two different environments: for development and for production. For development you can run a local web server that will build and reload automatically the application for each new modification on the project. The production mode builds and package the editor for different platforms.
+You can build the editor in two different environments: for development and for production. For development you can run a local Vite server that will rebuild and reload automatically after project changes. The production mode builds the web assets and can package the editor as an Electron desktop application.
 
 
 ## Requirements
@@ -9,44 +9,43 @@ To run the editor you will need the following softwares:
 
 **required for everything:**
 - [NodeJS](https://nodejs.org)
-- [Bower](http://bower.io)
 
 *if you want to run/build the desktop version:*
-- [Node-Webkit](http://nwjs.io)
-- [Node-Webkit Builder](https://github.com/nwjs/nw-builder)
+- Electron is installed through npm optional dependencies
 
 
 ## Configuration
 
-Before building, you need to install some 3rd-party libraries. You need to run in console the following commands:
+Before building, install the npm dependencies:
 
     npm install
 
-and:
+This installs runtime libraries, Vite build tooling, and desktop packaging dependencies.
 
-    bower install
-
-The former installs a bunch of NodeJS modules, which are used on the building system and some dependences of the desktop application. The last installs CSS and Javascript vendor libraries.
+The application bundle is built from the ES module entry at `src/main.js`.
+This entry keeps the legacy AngularJS and CreateJS source files behind explicit
+module imports while preserving the existing `window.b3e`, `window.editor`, and
+`startApp()` compatibility globals.
 
 
 ## Building during development
 
 During development you can run the editor in a web browser with automatically building and reloading:
 
-    gulp serve
+    npm run dev
 
 which will run a web server hosted on `http://127.0.0.1:8000`.
 
-To run the desktop version (without automatically building and reload):
+To build the web assets into `build/` without starting a server:
 
-    gulp nw
+    npm run build
 
 
 ## Building final version
 
 Just run:
 
-    gulp dist
+    npm run dist
 
-
+This command builds the web assets and packages the Electron desktop application into `dist/`.
 
