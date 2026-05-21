@@ -1,0 +1,79 @@
+.b3dialog {
+  position: fixed;
+  z-index: @z-modal + 20;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  &-background {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: @color-dark1;
+    opacity: 0.78;
+  }
+
+  &-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 440px;
+    max-width: calc(100% - 40px);
+    min-height: 160px;
+    padding: 0px;
+    border: 1px solid @color-light2;
+    border-radius: 4px;
+    color: @color-dark1;
+    background: @color-light1;
+    transform: translate(-50%, -50%);
+    .box-shadow(0px 0px 16px 0px);
+  }
+
+  &-mark {
+    height: 5px;
+    background: @color-light3;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  &-content {
+    padding: @padding-large;
+    padding-bottom: @padding-medium;
+  }
+
+  &-title {
+    margin: 0px 0px @padding-small-2x 0px;
+    color: @color-dark2;
+    font-size: 1.5em;
+    line-height: 1.25;
+    .font-header;
+  }
+
+  &-message {
+    margin: 0px;
+    color: @color-dark4;
+    line-height: 1.45;
+  }
+
+  &-field {
+    margin-top: @padding-medium;
+  }
+
+  &-actions {
+    padding: @padding-medium @padding-large;
+    text-align: right;
+    background: @color-light2;
+
+    .b3-button + .b3-button {
+      margin-left: @padding-small-2x;
+    }
+  }
+
+  &.success .b3dialog-mark { background: @color-green; }
+  &.error .b3dialog-mark { background: @color-red; }
+  &.warning .b3dialog-mark { background: @color-yellow; }
+  &.info .b3dialog-mark { background: @color-blue; }
+}

@@ -1,17 +1,19 @@
 import { nodejsService } from './nodejs.js';
+import { dialogState } from '../state/dialog-state.js';
 
-var root = window;
+function getDialogConfig(title, text, type, options) {
+  options = options || {};
 
-function callSwal(options, mapValue) {
-  return new Promise(function(resolve, reject) {
-    root.swal(options, function(value) {
-      if (mapValue) {
-        mapValue(value, resolve, reject);
-      } else {
-        resolve(value);
-      }
-    });
-  });
+  return {
+    title: typeof options.title === 'undefined' ? title : options.title,
+    text: typeof options.text === 'undefined' ? text : options.text,
+    type: type || options.type || options.customClass || 'default',
+    placeholder: options.inputPlaceholder || options.placeholder || '',
+    defaultValue: options.inputValue || options.defaultValue || '',
+    confirmButtonText: options.confirmButtonText || 'OK',
+    cancelButtonText: options.cancelButtonText || 'Cancel',
+    showCancelButton: options.showCancelButton
+  };
 }
 
 function normalizeDialogResult(value, multiple) {
@@ -52,40 +54,20 @@ function resolveMaybePromise(value, resolve, reject, multiple) {
 
 export var dialogService = {
   alert: function(title, text, type, options) {
-    options = options || {};
-    options.title = title;
-    options.text = text;
-    options.type = type;
-    options.customClass = type;
-
-    return callSwal(options);
+    return dialogState.alert(getDialogConfig(title, text, type, options));
   },
 
   confirm: function(title, text, type, options) {
-    options = options || {};
-    options.title = title;
-    options.text = text;
-    options.type = type;
-    options.customClass = type;
-    options.showCancelButton = true;
-
-    return callSwal(options, function(ok, resolve, reject) {
-      ok ? resolve() : reject();
-    });
+    var config = getDialogConfig(title, text, type, options);
+    config.showCancelButton = true;
+    return dialogState.confirm(config);
   },
 
   prompt: function(title, text, type, placeholder, options) {
-    options = options || {};
-    options.title = title;
-    options.text = text;
-    options.type = type || 'input';
-    options.inputPlaceholder = placeholder;
-    options.customClass = type;
-    options.showCancelButton = true;
-
-    return callSwal(options, function(value, resolve, reject) {
-      value !== false ? resolve(value) : reject(value);
-    });
+    var config = getDialogConfig(title, text, type || 'input', options);
+    config.placeholder = placeholder || config.placeholder;
+    config.showCancelButton = true;
+    return dialogState.prompt(config);
   },
 
   saveAs: function(placeholder) {
