@@ -22,7 +22,7 @@ const vendorJs = [
 const vendorCss = [];
 
 const vendorFonts = [
-  'node_modules/font-awesome/fonts/*',
+  'node_modules/@fortawesome/fontawesome-free/webfonts/*',
   'src/assets/fonts/**/*'
 ];
 
@@ -31,7 +31,8 @@ const preloadJs = [
 ];
 
 const preloadCss = [
-  'node_modules/font-awesome/css/font-awesome.min.css',
+  'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
+  'node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css',
   'src/assets/css/preload.css'
 ];
 
@@ -281,8 +282,8 @@ function copyImages() {
 
 function copyFonts() {
   for (const file of expand(vendorFonts)) {
-    if (file.startsWith('node_modules/font-awesome/fonts/')) {
-      copyFile(file, `fonts/${path.basename(file)}`);
+    if (file.startsWith('node_modules/@fortawesome/fontawesome-free/webfonts/')) {
+      copyFile(file, `webfonts/${path.basename(file)}`);
     } else if (file.startsWith('src/assets/fonts/')) {
       copyFile(file, file.replace(/^src\/assets\//, ''));
     }
