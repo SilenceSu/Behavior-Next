@@ -14,7 +14,6 @@ const vendorJs = [
   'src/assets/libs/createjs.min.js',
   'src/assets/libs/creatine-1.0.0.min.js',
   'src/assets/libs/behavior3js-0.1.0.min.js',
-  'src/assets/libs/mousetrap.min.js',
   'node_modules/vue/dist/vue.global.prod.js',
   'node_modules/vue-router/dist/vue-router.global.prod.js'
 ];

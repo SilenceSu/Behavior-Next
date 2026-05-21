@@ -1,27 +1,43 @@
-# BEHAVIOR3EDITOR
+# Behavior Next
 
 ![界面预览](preview.png)
 
-**Behavior3 Editor** 是 **Behavior3** 系列库的官方可视化编辑器。你可以在线访问，也可以下载到本地来管理本地项目。
+**Behavior Next** 是一个面向行为树编辑的可视化工具，用于创建、组织、导入和导出行为树项目。它可以作为 Web 应用运行，也可以通过 Electron 打包成桌面应用来管理本地项目。
 
 
-## 为什么选择 Behavior3 Editor？
+## 项目来源
 
-为什么要使用 b3editor？它与其他编辑器有什么不同？能否与商业替代品竞争？来看看 Behavior3 Editor 的一些特点：
+Behavior Next 基于 Behavior3 Editor 构建。原项目提供了行为树编辑器的早期基础、JSON 数据模型和部分画布运行时经验；当前项目已经围绕新的应用结构重构了绝大多数组件，包括 UI、构建系统、桌面打包、依赖管理、项目/设置服务、弹窗、通知和快捷键系统。除历史来源说明外，本文档均以 Behavior Next 作为当前项目名称。
+
+
+## 当前版本状态
+
+当前仓库已经从原始的 Bower/Gulp 工作流迁移到 npm + Vite。Web 端使用 Vue 3，桌面端通过 Electron 打包；画布编辑器核心仍沿用 CreateJS/Behavior3JS 的运行时概念，并通过模块入口统一管理。
+
+主要运行时和构建依赖：
+
+- **Vue 3 + Vue Router**：应用 UI 和路由。
+- **Vite**：开发服务器、热重载和生产构建入口。
+- **Electron 42 + @electron/packager**：桌面应用打包。
+- **Font Awesome 7**：通过 `@fortawesome/fontawesome-free` 提供图标，并加载 v4 shims 兼容旧的 `fa fa-*` 类名。
+- **CreateJS、Creatine、Behavior3JS**：作为画布和行为树运行时库保留在 `src/assets/libs/`。
+
+
+## 为什么选择 Behavior Next？
+
+Behavior Next 专注于用可视化方式设计、组织和维护行为树，同时保留开放数据格式，便于和游戏、机器人、仿真或其他运行时系统集成。
 
 - **开源软件**：基于 MIT 许可证，你可以自由使用本软件，根据需求进行修改，甚至在公司内部使用定制版本。你也可以通过提交 bug 修复、建议和补丁来帮助改进它。
 
-- **开放格式**：b3editor 可以将建模的行为树导出为 JSON 文件，遵循开放格式。如果你喜欢的编程语言还没有官方解析库，你可以开发自己的库来使用这里创建的行为树。
+- **开放格式**：Behavior Next 可以将建模的行为树导出为 JSON 文件，遵循开放格式。如果你喜欢的编程语言还没有现成解析库，可以开发自己的库来使用这里创建的行为树。
 
-- **形式化**：编辑器基于 Behavior3JS 构建，而 Behavior3JS 又基于行为树的形式化描述。因此，编辑器为游戏或其他应用（如机器人和通用仿真）中的智能体建模提供了稳定的解决方案。
+- **行为树建模**：编辑器面向组合节点、装饰节点、动作节点和条件节点等常见行为树结构，适合为游戏 AI、机器人和通用仿真中的智能体建模。
 
-- **注重易用性**：直观是 b3editor 的关键词。我们专注于为程序员和非程序员提供简单、清晰、直观的工具。如果有任何晦涩或难以使用的地方，请立即反馈！
+- **现代化应用结构**：UI、构建、桌面打包和依赖管理已经迁移到更容易维护的 npm/Vite/Vue/Electron 工作流。
 
-- **简约而实用**：b3editor 遵循简约风格，尽量减少屏幕上非必要信息的展示。我们专注于重要的事情：设计行为树。
+- **简约而实用**：界面尽量减少非必要信息，重点放在设计、编辑和管理行为树上。
 
 - **可定制**：创建你自己的节点类型，并单独定制节点实例。创建多个项目和行为树，修改标题并添加属性。
-
-- **大型项目展望**：我们正在开发协作工具，以便为涉及多位设计师协同工作的大型项目提供出色的编辑器。
 
 - **不依赖其他工具/编辑器/引擎**。
 
@@ -36,9 +52,21 @@
 - **JSON 导入导出**：将项目、行为树或节点导出为 JSON 格式，也可以重新导入。在你自己的库或工具中使用 JSON，由你决定。
 
 
-## 局限性
+## 兼容性说明
 
-没有什么是完美的 =(。Behavior3 Editor 主要针对 Chrome 浏览器（因此在 Opera 上也运行良好），所以在 Firefox 上存在一些兼容性问题，例如首次拖拽创建节点时的图片预览延迟，以及面板内滚动条样式问题。未在 IE 上测试！
+Behavior Next 主要在现代 Chromium 浏览器和 Electron 中验证。非 Chromium 浏览器可能存在画布拖拽、滚动条样式或文件访问能力差异；IE 不支持。
+
+
+## 项目结构
+
+- `src/main.js`：应用模块入口，按顺序导入兼容层、编辑器引擎和 Vue 应用。
+- `src/modules/editor-engine.js`：显式导入 legacy 画布编辑器源码，保留 `window.b3e` 等全局兼容行为。
+- `src/app/vue/`：Vue 3 UI、路由、状态和服务。
+- `src/assets/libs/`：CreateJS、Creatine、Behavior3JS 等 legacy 运行时库。
+- `scripts/legacy-build.js`：Vite 插件调用的旧资源构建脚本，负责合并 JS/CSS、编译 Less、复制图片和字体。
+- `scripts/package-electron.js`：生产构建后调用 `@electron/packager` 打包桌面应用。
+- `build/`：Web 静态构建产物。
+- `dist/`：Electron 桌面应用打包产物。
 
 
 ## 构建指南
@@ -51,7 +79,7 @@
 运行编辑器需要以下软件：
 
 **必需：**
-- [NodeJS](https://nodejs.org)
+- [Node.js](https://nodejs.org)，建议使用 22.12 或更新版本
 
 *如果你需要构建桌面版本：*
 - Electron 由 npm optional dependency 安装
@@ -59,14 +87,14 @@
 
 ### 配置
 
-在构建之前，你需要安装第三方库。在控制台中运行以下命令：
+在构建之前，你需要安装 npm 依赖。在控制台中运行以下命令：
 
     npm install
 
-该命令会安装运行时依赖、Vite 构建工具和桌面应用打包依赖。
+该命令会安装运行时依赖、Vite 构建工具和桌面应用打包依赖。Electron 位于 `optionalDependencies`，用于桌面打包。
 
 
-### 开发环境构建
+### 开发环境
 
 在开发过程中，你可以在浏览器中运行编辑器，并自动构建和重新加载：
 
@@ -79,13 +107,21 @@
     npm run build
 
 
-### 生产版本构建
+### 桌面应用打包
 
 只需运行：
 
     npm run dist
 
-该命令会先执行生产构建，再将 Electron 桌面应用打包到 `dist/`。
+该命令会先执行生产构建，再将 Electron 桌面应用打包到 `dist/`。当前打包目标由 `scripts/package-electron.js` 配置为 Linux 和 Windows。
+
+
+## 维护说明
+
+- 新增编辑器引擎源码时，需要检查 `src/modules/editor-engine.js` 的导入顺序。
+- 新增 Vue 应用文件通常会被 `src/app/**/*.js` 或 `src/app/**/*.vue` 监听；如果新增资源不在现有范围内，需要更新 `scripts/legacy-build.js`。
+- 源码中的 `[BUILD_VERSION]` 和 `[BUILD_DATE]` 会在构建时替换。
+- 旧图标类名通过 Font Awesome v4 shims 兼容；新增图标可以优先使用 Font Awesome 7 的类名。
 
 
 ## 寻找行为树库？

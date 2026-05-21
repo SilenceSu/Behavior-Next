@@ -1,9 +1,8 @@
 import { dialogService } from '../../services/dialog.js';
 import { editorBridge } from '../../services/editor-bridge.js';
+import { keyboardShortcuts } from '../../services/keyboard-shortcuts.js';
 import { notificationState } from '../../state/notification-state.js';
 import { projectState } from '../../state/project-state.js';
-
-var root = window;
 
 function getProject() {
   return editorBridge.getProject();
@@ -17,6 +16,12 @@ function getTree() {
 export var Menubar = {
   name: 'Menubar',
 
+  data: function() {
+    return {
+      shortcutDisposer: null
+    };
+  },
+
   mounted: function() {
     this.bindShortcuts();
   },
@@ -27,35 +32,32 @@ export var Menubar = {
 
   methods: {
     bindShortcuts: function() {
-      var mousetrap = root.Mousetrap;
-      if (!mousetrap) {
-        return;
+      if (this.shortcutDisposer) {
+        this.shortcutDisposer();
       }
 
-      mousetrap.bind('ctrl+q', this.onCloseProject);
-      mousetrap.bind('ctrl+s', this.onSaveProject);
-      mousetrap.bind('ctrl+z', this.onUndo);
-      mousetrap.bind('ctrl+shift+z', this.onRedo);
-      mousetrap.bind('ctrl+c', this.onCopy);
-      mousetrap.bind('ctrl+v', this.onPaste);
-      mousetrap.bind('ctrl+x', this.onCut);
-      mousetrap.bind('ctrl+d', this.onDuplicate);
-      mousetrap.bind('del', this.onRemove);
-      mousetrap.bind('a', this.onAutoOrganize);
-      mousetrap.bind('ctrl+a', this.onSelectAll);
-      mousetrap.bind('ctrl+shift+a', this.onDeselectAll);
-      mousetrap.bind('ctrl+i', this.onInvertSelection);
+      this.shortcutDisposer = keyboardShortcuts.bindAll([
+        { key: 'ctrl+q', handler: 'onCloseProject' },
+        { key: 'ctrl+s', handler: 'onSaveProject' },
+        { key: 'ctrl+z', handler: 'onUndo' },
+        { key: 'ctrl+shift+z', handler: 'onRedo' },
+        { key: 'ctrl+c', handler: 'onCopy' },
+        { key: 'ctrl+v', handler: 'onPaste' },
+        { key: 'ctrl+x', handler: 'onCut' },
+        { key: 'ctrl+d', handler: 'onDuplicate' },
+        { key: 'del', handler: 'onRemove' },
+        { key: 'a', handler: 'onAutoOrganize' },
+        { key: 'ctrl+a', handler: 'onSelectAll' },
+        { key: 'ctrl+shift+a', handler: 'onDeselectAll' },
+        { key: 'ctrl+i', handler: 'onInvertSelection' }
+      ], this);
     },
 
     unbindShortcuts: function() {
-      var mousetrap = root.Mousetrap;
-      if (!mousetrap) {
-        return;
+      if (this.shortcutDisposer) {
+        this.shortcutDisposer();
+        this.shortcutDisposer = null;
       }
-
-      ['ctrl+q', 'ctrl+s', 'ctrl+z', 'ctrl+shift+z', 'ctrl+c', 'ctrl+v', 'ctrl+x', 'ctrl+d', 'del', 'a', 'ctrl+a', 'ctrl+shift+a', 'ctrl+i'].forEach(function(key) {
-        mousetrap.unbind(key);
-      });
     },
 
     onExportProjectJson: function() {

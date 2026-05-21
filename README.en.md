@@ -1,27 +1,30 @@
-# BEHAVIOR3EDITOR
+# Behavior Next
 
 ![interface preview](preview.png)
 
-**Behavior3 Editor** is the official visual editor for the **Behavior3** libraries. It can be accessed online or you can download it to have handle local projects.
+**Behavior Next** is a visual behavior tree editor for creating, organizing, importing, and exporting behavior tree projects. It can run as a web app or be packaged as an Electron desktop app for local projects.
 
 
-## Why Behavior3 Editor?
+## Origin
 
-Why should you use b3editor? What is different from other editors? Can it compete against commercial alternatives? - Well, check it out some characteristics of Behavior3 Editor:
+Behavior Next is built on top of Behavior3 Editor. The original project provided the early behavior tree editor foundation, JSON data model, and part of the canvas runtime experience; the current project has refactored nearly all major components around a new application structure, including the UI, build system, desktop packaging, dependency management, project/settings services, dialogs, notifications, and shortcut system.
+
+
+## Why Behavior Next?
+
+Behavior Next focuses on visual behavior tree design while keeping an open data format that can integrate with games, robotics, simulations, or other runtime systems.
 
 - **Open Source Software**: under MIT license, you can use this software freely, adapt it to your need and even use a specialized internal version in your company. You can also contribute with bug fixes, suggestions and patches to make it better.
 
-- **Open Format**: b3editor can export the modeled trees to JSON files, following an open format. If there is no official reader on your favorite language yet, you can develop your own library and use the trees created here. 
+- **Open Format**: Behavior Next can export modeled trees to JSON files, following an open format. If there is no ready-made reader for your preferred language, you can develop your own library and use the trees created here.
 
-- **Formality**: the editor works above the basis created by Behavior3JS, which in turn is based on formal description of behavior trees. Thus, the editor provides a stable solution to model agents for your games or other applications such as robotics and simulations in general.
+- **Behavior Tree Modeling**: the editor supports common behavior tree structures such as composite, decorator, action, and condition nodes.
 
-- **Focus on Usability**: intuitiveness is the key word of b3editor. We focus on providing an easy, clean, and intuitive tool for programmers and non-programmers. If there is something obscure or too difficult to use, report it immediately!
+- **Modern Application Structure**: the UI, build pipeline, desktop packaging, and dependency management have moved to an npm/Vite/Vue/Electron workflow.
 
-- **Minimalist, but Functional**: b3editor follows a minimalist style, trying to reduce the amount of non-essential information presented on the screen. We focus on the important things: designing Behavior Trees. 
+- **Minimalist, but Functional**: the interface avoids unnecessary noise and focuses on designing, editing, and managing behavior trees.
 
 - **Customizable**: create your own node types and customize nodes instances individually. Create several projects and trees, change titles and add properties.
-
-- **Big Projects Ahead**: we are working towards a collaborative tool in order to provide an awesome editor for big projects involving several designers working together. 
 
 - **Does not depends on other tools/editors/engines**.
 
@@ -36,9 +39,9 @@ Why should you use b3editor? What is different from other editors? Can it compet
 - **Import and Export to JSON**: export your project, tree or nodes to JSON format. Import them back. Use JSON on your own custom library or tool. You decide.
 
 
-## Limitations
+## Compatibility
 
-Nothing is perfect =( . Behavior3 Editor focus on Chrome (thus, working pretty well on Opera too), so it have some incompatibilities with Firefox, such as the image preview lag when dragging to create a node for the first time, and the ugly scroll bar inside the panels. Not tested on IE!
+Behavior Next is primarily verified in modern Chromium browsers and Electron. Non-Chromium browsers may differ in canvas dragging, scrollbar styling, or file access behavior. IE is not supported.
 
 
 ## Building
