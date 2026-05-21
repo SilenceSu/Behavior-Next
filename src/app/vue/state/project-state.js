@@ -12,7 +12,7 @@ var state = root.Vue.reactive({
 var recentPath = systemService.join(systemService.getDataPath(), 'recents.json');
 
 function saveRecentProjects() {
-  storageService.save(recentPath, state.recentProjects);
+  return storageService.saveAsync(recentPath, state.recentProjects);
 }
 
 function updateRecentProjects(project) {
@@ -37,29 +37,32 @@ function updateRecentProjects(project) {
     }
   }
 
-  saveRecentProjects();
+  return saveRecentProjects();
 }
 
 function setProject(project) {
   state.currentProject = project;
-  updateRecentProjects(project);
+  return updateRecentProjects(project);
 }
 
 export var projectState = {
   state: state,
 
   getRecentProjects: function() {
-    if (!state.loaded) {
-      var data = [];
-      try {
-        data = storageService.load(recentPath) || [];
-      } catch (e) {}
-
-      state.recentProjects.splice.apply(state.recentProjects, [0, state.recentProjects.length].concat(data));
-      state.loaded = true;
+    if (state.loaded) {
+      return Promise.resolve(state.recentProjects);
     }
 
-    return Promise.resolve(state.recentProjects);
+    return storageService
+      .loadAsync(recentPath)
+      .catch(function() {
+        return [];
+      })
+      .then(function(data) {
+        state.recentProjects.splice.apply(state.recentProjects, [0, state.recentProjects.length].concat(data || []));
+        state.loaded = true;
+        return state.recentProjects;
+      });
   },
 
   newProject: function(path, name) {
@@ -74,7 +77,7 @@ export var projectState = {
     project.data = editorBridge.exportProject();
 
     return this.saveProject(project).then(function() {
-      setProject(project);
+      return setProject(project);
     });
   },
 
@@ -86,29 +89,26 @@ export var projectState = {
     project = project || state.currentProject;
     project.data = editorBridge.exportProject();
     editorBridge.clearDirty();
-    storageService.save(project.path, project);
-    updateRecentProjects(project);
-    return Promise.resolve();
+    return storageService.saveAsync(project.path, project).then(function() {
+      return updateRecentProjects(project);
+    });
   },
 
   openProject: function(path) {
-    return new Promise(function(resolve, reject) {
-      try {
-        var project = storageService.load(path);
+    return storageService
+      .loadAsync(path)
+      .then(function(project) {
         editorBridge.openProject(project.data);
-        setProject(project);
-        resolve(project);
-      } catch (e) {
-        reject(e);
-      }
-    });
+        return setProject(project).then(function() {
+          return project;
+        });
+      });
   },
 
   closeProject: function() {
     editorBridge.clearDirty();
     editorBridge.closeProject();
-    setProject(null);
-    return Promise.resolve();
+    return setProject(null);
   },
 
   removeProject: function(path) {
@@ -119,7 +119,6 @@ export var projectState = {
       }
     }
 
-    saveRecentProjects();
-    return Promise.resolve();
+    return saveRecentProjects();
   }
 };

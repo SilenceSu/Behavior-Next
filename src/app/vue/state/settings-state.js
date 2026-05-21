@@ -31,39 +31,60 @@ export var settingsState = {
   state: state,
 
   getSettings: function() {
-    if (!state.loaded) {
-      var data = null;
-      var defaultData = editorBridge.getDefaultSettings();
-
-      try {
-        data = storageService.load(settingsPath);
-        editorBridge.applySettings(data);
-      } catch (e) {}
-
-      if (!data) {
-        data = defaultData;
-        storageService.save(settingsPath, data);
-      }
-
-      replaceSettings(mergeSettings(defaultData, data));
-      state.loaded = true;
+    if (state.loaded) {
+      return Promise.resolve(state.settings);
     }
 
-    return Promise.resolve(state.settings);
+    var defaultData = editorBridge.getDefaultSettings();
+
+    return storageService
+      .loadAsync(settingsPath)
+      .catch(function() {
+        return null;
+      })
+      .then(function(data) {
+        if (data) {
+          try {
+            editorBridge.applySettings(data);
+            return data;
+          } catch (e) {
+            data = null;
+          }
+        }
+
+        data = defaultData;
+        return storageService
+          .saveAsync(settingsPath, data)
+          .catch(function() {})
+          .then(function() {
+            return data;
+          });
+      })
+      .then(function(data) {
+        if (!data) {
+          data = defaultData;
+        }
+
+        replaceSettings(mergeSettings(defaultData, data));
+        state.loaded = true;
+        return state.settings;
+      });
   },
 
   saveSettings: function(settings) {
     editorBridge.applySettings(settings);
-    storageService.save(settingsPath, settings);
-    replaceSettings(settings);
-    return Promise.resolve();
+    return storageService.saveAsync(settingsPath, settings).then(function() {
+      replaceSettings(settings);
+      return state.settings;
+    });
   },
 
   resetSettings: function() {
     var settings = editorBridge.getDefaultSettings();
-    storageService.save(settingsPath, settings);
-    replaceSettings(settings);
     editorBridge.applySettings(settings);
-    return Promise.resolve(state.settings);
+    return storageService.saveAsync(settingsPath, settings).then(function() {
+      replaceSettings(settings);
+      return state.settings;
+    });
   }
 };

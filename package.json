@@ -13,7 +13,7 @@
     "dist": "node scripts/package-electron.js"
   },
   "devDependencies": {
-    "@electron/packager": "^18.3.5",
+    "@electron/packager": "^20.0.0",
     "@vitejs/plugin-vue": "^6.0.7",
     "clean-css": "^5.3.3",
     "font-awesome": "^4.7.0",
@@ -24,6 +24,6 @@
     "vue-router": "^4.6.4"
   },
   "optionalDependencies": {
-    "electron": "^33.2.0"
+    "electron": "^42.2.0"
   }
 }

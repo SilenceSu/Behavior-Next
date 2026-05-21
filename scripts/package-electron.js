@@ -2,8 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const packager = require('@electron/packager');
+const electronPackager = require('@electron/packager');
 const { buildAll, rootDir } = require('./legacy-build');
+
+const packager = electronPackager.packager || electronPackager;
+
+function getInstalledElectronVersion() {
+  return require('electron/package.json').version;
+}
 
 async function packageElectron() {
   const project = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
@@ -18,7 +24,7 @@ async function packageElectron() {
     name: project.name,
     platform: 'linux,win32',
     arch: 'all',
-    electronVersion: '33.2.0',
+    electronVersion: getInstalledElectronVersion(),
     overwrite: true,
     asar: true
   });

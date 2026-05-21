@@ -1,18 +1,19 @@
 import { nodejsService } from './nodejs.js';
 
-var root = window;
-var isDesktop = !!root.process && nodejsService.ok;
+var isDesktop = nodejsService.ok;
 
-function createIfMissing(path) {
-  if (!isDesktop || !nodejsService.fs) {
-    return;
+function trimTrailingSeparators(value, separator) {
+  while (value.length > 1 && value.lastIndexOf(separator) === value.length - separator.length) {
+    value = value.slice(0, -separator.length);
   }
+  return value;
+}
 
-  try {
-    nodejsService.fs.statSync(path);
-  } catch (e) {
-    nodejsService.fs.mkdirSync(path);
+function trimLeadingSeparators(value, separator) {
+  while (value.indexOf(separator) === 0) {
+    value = value.slice(separator.length);
   }
+  return value;
 }
 
 function getDataPath() {
@@ -20,20 +21,22 @@ function getDataPath() {
     return 'b3editor';
   }
 
-  var dataPath = root.process.env.APPDATA;
-  if (!dataPath) {
-    dataPath = root.process.env.HOME + '/.behavior3';
-  }
-
-  var appPath = join(dataPath, 'b3editor');
-  createIfMissing(dataPath);
-  createIfMissing(appPath);
-  return appPath;
+  return nodejsService.system.dataPath;
 }
 
 function join() {
-  if (isDesktop && nodejsService.path) {
-    return nodejsService.path.join.apply(nodejsService.path, arguments);
+  if (isDesktop && nodejsService.system && nodejsService.system.pathSeparator) {
+    var separator = nodejsService.system.pathSeparator;
+    var parts = Array.prototype.slice.call(arguments).filter(Boolean);
+    if (!parts.length) {
+      return '';
+    }
+
+    var value = trimTrailingSeparators(String(parts[0]), separator);
+    for (var i = 1; i < parts.length; i++) {
+      value += separator + trimLeadingSeparators(String(parts[i]), separator);
+    }
+    return value;
   }
 
   var value = arguments[0];

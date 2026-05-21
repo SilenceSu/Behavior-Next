@@ -1,40 +1,22 @@
 var root = window;
 
 function loadNodeService() {
-  var ok = !!root.require;
+  var api = root.b3Electron || null;
+  var ok = !!api && api.ok !== false;
   var service = {
     ok: ok,
-    fs: null,
-    path: null,
-    dialog: null
+    dialog: null,
+    storage: null,
+    system: null
   };
 
   if (!ok) {
     return service;
   }
 
-  try {
-    service.fs = root.require('fs');
-    service.path = root.require('path');
-  } catch (e) {}
-
-  if (root.electronDialog) {
-    service.dialog = root.electronDialog;
-  }
-
-  if (!service.dialog) {
-    try {
-      var remote = root.require('remote');
-      service.dialog = remote.require('dialog');
-    } catch (e) {}
-  }
-
-  if (!service.dialog) {
-    try {
-      var electron = root.require('electron');
-      service.dialog = electron.dialog || (electron.remote && electron.remote.dialog);
-    } catch (ignored) {}
-  }
+  service.dialog = api.dialog || null;
+  service.storage = api.storage || null;
+  service.system = api.system || null;
 
   return service;
 }

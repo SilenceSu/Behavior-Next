@@ -35,25 +35,30 @@ var localStorageDriver = {
 };
 
 var fileStorageDriver = {
-  ok: nodejsService.ok && !!nodejsService.fs,
+  ok: nodejsService.ok && !!nodejsService.storage,
 
   save: function(path, data) {
-    var content = stringify(data);
-    var tempPath = path + '~';
-    var file = nodejsService.fs.openSync(tempPath, 'w');
-    nodejsService.fs.writeSync(file, content);
-    nodejsService.fs.closeSync(file);
-    nodejsService.fs.renameSync(tempPath, path);
+    return this.saveAsync(path, data);
   },
 
   load: function(path) {
-    return parse(nodejsService.fs.readFileSync(path, 'utf-8'));
+    throw new Error('Synchronous file storage load is not available in Electron renderer.');
   },
 
   remove: function(path) {
-    try {
-      nodejsService.fs.unlinkSync(path);
-    } catch (e) {}
+    return this.removeAsync(path);
+  },
+
+  saveAsync: function(path, data) {
+    return nodejsService.storage.writeFile(path, stringify(data));
+  },
+
+  loadAsync: function(path) {
+    return nodejsService.storage.readFile(path).then(parse);
+  },
+
+  removeAsync: function(path) {
+    return nodejsService.storage.removeFile(path);
   }
 };
 
@@ -61,10 +66,14 @@ var storage = fileStorageDriver.ok ? fileStorageDriver : localStorageDriver;
 
 export var storageService = {
   save: function(path, data) {
-    storage.save(path, data);
+    return storage.save(path, data);
   },
 
   saveAsync: function(path, data) {
+    if (storage.saveAsync) {
+      return storage.saveAsync(path, data);
+    }
+
     return new Promise(function(resolve, reject) {
       try {
         storage.save(path, data);
@@ -80,6 +89,10 @@ export var storageService = {
   },
 
   loadAsync: function(path) {
+    if (storage.loadAsync) {
+      return storage.loadAsync(path);
+    }
+
     return new Promise(function(resolve, reject) {
       try {
         resolve(storage.load(path));
@@ -90,10 +103,14 @@ export var storageService = {
   },
 
   remove: function(path) {
-    storage.remove(path);
+    return storage.remove(path);
   },
 
   removeAsync: function(path) {
+    if (storage.removeAsync) {
+      return storage.removeAsync(path);
+    }
+
     return new Promise(function(resolve, reject) {
       try {
         storage.remove(path);

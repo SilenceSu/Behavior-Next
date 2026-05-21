@@ -1,5 +1,4 @@
 import { bindDropNode } from '../directives/drop-node.js';
-import { dialogService } from '../services/dialog.js';
 import { editorBridge } from '../services/editor-bridge.js';
 import { projectState } from './project-state.js';
 import { settingsState } from './settings-state.js';
@@ -28,26 +27,6 @@ function bindWindowCloseGuard() {
       return 'Leaving now will erase your unsaved changes.';
     }
   };
-
-  try {
-    var gui = root.require('nw.gui');
-    var win = gui.Window.get();
-    win.on('close', function() {
-      if (editorBridge.isDirty()) {
-        dialogService
-          .confirm(
-            'Leave without saving?',
-            'If you proceed you will lose all unsaved modifications.',
-            null
-          )
-          .then(function() {
-            win.close(true);
-          });
-      } else {
-        win.close(true);
-      }
-    });
-  } catch (e) {}
 }
 
 export function initializeApp() {
