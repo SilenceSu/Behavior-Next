@@ -123,9 +123,9 @@ b3e.tree.BlockManager = function(editor, project, tree) {
       block.description = node.description || block.description;
     }
     if (typeof template.properties !== 'undefined') {
-      block.properties = tine.merge({}, node.properties, template.properties);
+      block.properties = b3e.runtime.merge({}, node.properties, template.properties);
     } else {
-      block.properties = tine.merge({}, node.properties, block.properties);
+      block.properties = b3e.runtime.merge({}, node.properties, block.properties);
     }
     block._redraw();
 

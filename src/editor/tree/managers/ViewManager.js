@@ -17,7 +17,7 @@ b3e.tree.ViewManager = function(editor, project, tree) {
     var step = editor._settings.get('zoom_step');
     
     var zoom = tree.scaleX;
-    this.zoom(tine.clip(zoom+step, min, max));
+    this.zoom(b3e.runtime.clip(zoom+step, min, max));
   };
   this.zoomOut = function() {
     var min = editor._settings.get('zoom_min');
@@ -25,7 +25,7 @@ b3e.tree.ViewManager = function(editor, project, tree) {
     var step = editor._settings.get('zoom_step');
     
     var zoom = tree.scaleX;
-    this.zoom(tine.clip(zoom-step, min, max));
+    this.zoom(b3e.runtime.clip(zoom-step, min, max));
   };
   this.pan = function(dx, dy) {
     tree.x += dx;

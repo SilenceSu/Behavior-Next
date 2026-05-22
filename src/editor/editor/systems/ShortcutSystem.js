@@ -9,6 +9,6 @@ b3e.editor.ShortcutSystem = function(editor) {
     if (!tree) return;
 
     var kb = editor._game.keyboard;
-    var k = tine.keys;
+    var k = b3e.runtime.keys;
   };
 };

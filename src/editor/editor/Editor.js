@@ -28,7 +28,7 @@
   
   p._createGame = function() {
     var self = this;
-    this._game = new tine.Game(null, {
+    this._game = b3e.runtime.createEditorRuntime({
       update : function() { self._update(); },
     });
 
@@ -71,7 +71,7 @@
   };
 
   /**
-   * Called by creatine game.
+   * Called by the editor runtime.
    */
   p._update = function() {
     var delta = this._game.time.delta;

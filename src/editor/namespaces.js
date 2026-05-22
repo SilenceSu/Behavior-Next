@@ -10,6 +10,7 @@
  * - **b3e.editor**  : contains the editor class, editor-related managers and 
  *                     symbols;
  * - **b3e.project** : contains the project class and project-related managers;
+ * - **b3e.runtime** : contains the editor runtime and input helpers;
  * - **b3e.tree**    : contains the tree class and tree-related managers;
  *
  * As a general rule, an application has a single editor instance; the editor
@@ -29,6 +30,7 @@ window.b3e         = window.b3e || {};
 window.b3e.draw    = window.b3e.draw || {};
 window.b3e.editor  = window.b3e.editor || {};
 window.b3e.project = window.b3e.project || {};
+window.b3e.runtime = window.b3e.runtime || {};
 window.b3e.tree    = window.b3e.tree || {};
 
 

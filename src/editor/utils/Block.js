@@ -20,7 +20,7 @@
     this.title       = dict.title || this.name;
     this.category    = dict.category;
     this.description = dict.description || '';
-    this.properties  = tine.merge({}, dict.properties);
+    this.properties  = b3e.runtime.merge({}, dict.properties);
 
     this._settings = null;
     this._inConnection = null;
@@ -89,7 +89,7 @@
     block.category    = this.category;
     block.title       = this.title;
     block.description = this.description;
-    block.properties  = tine.merge({}, this.properties);
+    block.properties  = b3e.runtime.merge({}, this.properties);
     
     block._applySettings(this._settings);
     block.x           = this.x;

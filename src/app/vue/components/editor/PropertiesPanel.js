@@ -1,13 +1,8 @@
 import { KeyTable } from '../KeyTable.js';
 import { editorBridge } from '../../services/editor-bridge.js';
 
-var root = window;
-
 function cloneProperties(properties) {
-  if (root.tine && root.tine.merge) {
-    return root.tine.merge({}, properties);
-  }
-  return Object.assign({}, properties);
+  return window.b3e.runtime.merge({}, properties);
 }
 
 export var PropertiesPanel = {

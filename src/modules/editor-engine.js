@@ -1,6 +1,7 @@
 import './compatibility.js';
 
 import '../editor/namespaces.js';
+import '../editor/runtime/Runtime.js';
 import '../editor/utils/Block.js';
 import '../editor/utils/Command.js';
 import '../editor/utils/Connection.js';

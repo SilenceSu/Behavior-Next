@@ -11,11 +11,7 @@ var state = root.Vue.reactive({
 var settingsPath = systemService.join(systemService.getDataPath(), 'settings.json');
 
 function mergeSettings(defaults, data) {
-  if (root.tine && root.tine.merge) {
-    return root.tine.merge({}, defaults, data);
-  }
-
-  return Object.assign({}, defaults, data);
+  return root.b3e.runtime.merge({}, defaults, data);
 }
 
 function replaceSettings(settings) {

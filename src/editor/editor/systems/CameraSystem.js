@@ -13,7 +13,7 @@ b3e.editor.CameraSystem = function(editor) {
     if (!tree) return;
 
     var kb = editor._game.keyboard;
-    var k = tine.keys;
+    var k = b3e.runtime.keys;
 
     if (kb.isDown(k.CTRL)) {
       if (kb.isPressed(k.UP)) {
