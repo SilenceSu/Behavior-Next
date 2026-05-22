@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Behavior3 Editor 的 Agent 指导文件。完整架构详见 CLAUDE.md。
+Behavior Next 的 Agent 指导文件。完整架构详见 CLAUDE.md。
 
 ## 构建命令
 

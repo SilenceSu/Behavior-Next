@@ -13,7 +13,7 @@ import type { BaseNode } from "./nodes/base-node.ts";
 /**
  * 运行时行为树。
  *
- * 编辑器仍导出原有 Behavior3 Editor / Behavior3JS JSON 结构，但执行逻辑
+ * 编辑器仍导出既有 Behavior3JS JSON 结构，但执行逻辑
  * 已经迁移到 TypeScript 实现。这个类负责：
  *
  * - 从 JSON 实例化节点并建立父子关系。

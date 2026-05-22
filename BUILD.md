@@ -1,6 +1,6 @@
 # Building Behavior Next
 
-Behavior Next is based on Behavior3 Editor, but the current project has refactored nearly all major application components around the npm/Vite/Vue/Electron toolchain.
+Behavior Next is maintained around the npm/Vite/Vue/Electron toolchain, with TypeScript used across the application and behavior runtime.
 
 You can build the editor in two different environments: for development and for production. For development you can run a local Vite server that will rebuild and reload automatically after project changes. The production mode builds the web assets and can package the editor as an Electron desktop application.
 

@@ -64,7 +64,7 @@ export interface CustomNodeSpec {
 /**
  * 行为树导入/导出的核心 JSON 结构。
  *
- * 字段命名对齐原 Behavior3 Editor / Behavior3JS 格式；旧格式使用
+ * 字段命名对齐既有 Behavior3JS 格式；旧格式使用
  * snake_case 的字段继续保持原样，避免破坏已有 .b3/.json 文件。
  */
 export interface BehaviorTreeData {

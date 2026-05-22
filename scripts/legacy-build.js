@@ -254,6 +254,7 @@ async function buildAppModule(outputPath, options) {
   const rollupModule = await import('rollup');
   const bundle = await rollupModule.rollup({
     input: resolveRoot(appModuleEntry),
+    external: ['vue'],
     treeshake: {
       moduleSideEffects: true
     },
@@ -279,8 +280,11 @@ async function buildAppModule(outputPath, options) {
   try {
     const generated = await bundle.generate({
       format: 'iife',
-      name: 'Behavior3EditorApp',
+      name: 'BehaviorNextApp',
       exports: 'named',
+      globals: {
+        vue: 'Vue'
+      },
       generatedCode: 'es5',
       compact: production
     });

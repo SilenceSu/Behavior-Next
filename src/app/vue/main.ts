@@ -1,4 +1,4 @@
-import { App } from './App.ts';
+import App from './App.vue';
 import { router } from './router.ts';
 import { dragNodeDirective } from './directives/drag-node.ts';
 import { dropNodeDirective } from './directives/drop-node.ts';

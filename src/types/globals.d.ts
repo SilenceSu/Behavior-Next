@@ -19,3 +19,8 @@ interface Window {
   b3Electron: any;
   require?: any;
 }
+
+declare module "*.vue" {
+  const component: any;
+  export default component;
+}

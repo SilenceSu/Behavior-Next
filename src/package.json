@@ -3,7 +3,7 @@
   "version" : "[BUILD_VERSION]",
   "main"    : "desktop.js",
   "window": {
-    "title"      : "Behavior3 Editor (v[BUILD_VERSION]) http://behavior3.com",
+    "title"      : "Behavior Next (v[BUILD_VERSION])",
     "position"   : "center",
     "toolbar"    : false,
     "frame"      : true,

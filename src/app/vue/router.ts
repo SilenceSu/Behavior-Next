@@ -1,11 +1,11 @@
-import { DashLayout } from './layouts/DashLayout.ts';
-import { HomeView } from './views/HomeView.ts';
-import { ProjectsView } from './views/ProjectsView.ts';
-import { SettingsView } from './views/SettingsView.ts';
-import { EditorView } from './views/EditorView.ts';
-import { EditNodeModal } from './components/modals/EditNodeModal.ts';
-import { ExportModal } from './components/modals/ExportModal.ts';
-import { ImportModal } from './components/modals/ImportModal.ts';
+import DashLayout from './layouts/DashLayout.vue';
+import HomeView from './views/HomeView.vue';
+import ProjectsView from './views/ProjectsView.vue';
+import SettingsView from './views/SettingsView.vue';
+import EditorView from './views/EditorView.vue';
+import EditNodeModal from './components/modals/EditNodeModal.vue';
+import ExportModal from './components/modals/ExportModal.vue';
+import ImportModal from './components/modals/ImportModal.vue';
 
 var VueRouter = window.VueRouter;
 
