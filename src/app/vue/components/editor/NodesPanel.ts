@@ -1,6 +1,6 @@
-import { dialogService } from '../../services/dialog.js';
-import { editorBridge } from '../../services/editor-bridge.js';
-import { notificationState } from '../../state/notification-state.js';
+import { dialogService } from '../../services/dialog.ts';
+import { editorBridge } from '../../services/editor-bridge.ts';
+import { notificationState } from '../../state/notification-state.ts';
 
 function getTitle(node) {
   var title = node.title || node.name;

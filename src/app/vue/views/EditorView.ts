@@ -1,6 +1,6 @@
-import { Menubar } from '../components/editor/Menubar.js';
-import { NodesPanel } from '../components/editor/NodesPanel.js';
-import { PropertiesPanel } from '../components/editor/PropertiesPanel.js';
+import { Menubar } from '../components/editor/Menubar.ts';
+import { NodesPanel } from '../components/editor/NodesPanel.ts';
+import { PropertiesPanel } from '../components/editor/PropertiesPanel.ts';
 
 export var EditorView = {
   name: 'EditorView',

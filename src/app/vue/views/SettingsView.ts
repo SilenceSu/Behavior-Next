@@ -1,6 +1,6 @@
-import { dialogService } from '../services/dialog.js';
-import { notificationState } from '../state/notification-state.js';
-import { settingsState } from '../state/settings-state.js';
+import { dialogService } from '../services/dialog.ts';
+import { notificationState } from '../state/notification-state.ts';
+import { settingsState } from '../state/settings-state.ts';
 
 var numberFields = [
   { key: 'snap_x', label: 'Snap X', min: 1 },

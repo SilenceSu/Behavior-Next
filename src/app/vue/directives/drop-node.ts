@@ -1,4 +1,4 @@
-import { editorBridge } from '../services/editor-bridge.js';
+import { editorBridge } from '../services/editor-bridge.ts';
 
 function handleDragOver(event) {
   if (event.preventDefault) {

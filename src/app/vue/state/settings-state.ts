@@ -1,6 +1,6 @@
-import { systemService } from '../services/system.js';
-import { storageService } from '../services/storage.js';
-import { editorBridge } from '../services/editor-bridge.js';
+import { systemService } from '../services/system.ts';
+import { storageService } from '../services/storage.ts';
+import { editorBridge } from '../services/editor-bridge.ts';
 
 var root = window;
 var state = root.Vue.reactive({

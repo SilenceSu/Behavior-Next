@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const CleanCSS = require('clean-css');
+const esbuild = require('esbuild');
 const less = require('less');
 const vue = require('@vitejs/plugin-vue');
 const UglifyJS = require('uglify-js');
@@ -12,7 +13,6 @@ const outDir = path.join(rootDir, 'build');
 
 const vendorJs = [
   'src/assets/libs/createjs.min.js',
-  'src/assets/libs/creatine-1.0.0.min.js',
   'src/assets/libs/behavior3js-0.1.0.min.js',
   'node_modules/vue/dist/vue.global.prod.js',
   'node_modules/vue-router/dist/vue-router.global.prod.js'
@@ -26,7 +26,7 @@ const vendorFonts = [
 ];
 
 const preloadJs = [
-  'src/assets/js/preload.js'
+  'src/assets/js/preload.ts'
 ];
 
 const preloadCss = [
@@ -35,13 +35,13 @@ const preloadCss = [
   'src/assets/css/preload.css'
 ];
 
-const appModuleEntry = 'src/main.js';
+const appModuleEntry = 'src/main.ts';
 const appModuleSources = [
-  'src/main.js',
-  'src/start.js',
-  'src/modules/**/*.js',
-  'src/editor/**/*.js',
-  'src/app/**/*.js',
+  'src/main.ts',
+  'src/start.ts',
+  'src/modules/**/*.ts',
+  'src/editor/**/*.ts',
+  'src/app/**/*.ts',
   'src/app/**/*.vue'
 ];
 
@@ -50,8 +50,8 @@ const appImgs = ['src/assets/imgs/**/*'];
 const appEntry = [
   'src/index.html',
   'src/package.json',
-  'src/desktop.js',
-  'src/preload-electron.js'
+  'src/desktop.ts',
+  'src/preload-electron.ts'
 ];
 
 const watchGlobs = [
@@ -125,6 +125,10 @@ function listFiles(pattern) {
     return walkFiles(pattern.slice(0, -8)).filter((file) => file.endsWith('.js'));
   }
 
+  if (pattern.endsWith('/**/*.ts')) {
+    return walkFiles(pattern.slice(0, -8)).filter((file) => file.endsWith('.ts'));
+  }
+
   if (pattern.endsWith('/**/*.html')) {
     return walkFiles(pattern.slice(0, -10)).filter((file) => file.endsWith('.html'));
   }
@@ -133,6 +137,12 @@ function listFiles(pattern) {
     const directory = pattern.slice(0, -5);
     return walkFiles(directory)
       .filter((file) => path.dirname(file) === directory && file.endsWith('.js'));
+  }
+
+  if (pattern.endsWith('/*.ts')) {
+    const directory = pattern.slice(0, -5);
+    return walkFiles(directory)
+      .filter((file) => path.dirname(file) === directory && file.endsWith('.ts'));
   }
 
   if (pattern.endsWith('/*')) {
@@ -173,6 +183,23 @@ function replaceBuildMetadata(content, metadata) {
     .replace(/\[BUILD_DATE\]/g, metadata.date);
 }
 
+function transpileTypeScript(file, source) {
+  if (!file.endsWith('.ts')) {
+    return source;
+  }
+
+  return esbuild.transformSync(source, {
+    loader: 'ts',
+    target: 'es2018',
+    sourcefile: file,
+    sourcemap: false
+  }).code;
+}
+
+function readBuildSource(file, metadata) {
+  return transpileTypeScript(file, replaceBuildMetadata(readText(file), metadata));
+}
+
 function minifyJs(source, outputName) {
   const result = UglifyJS.minify(source);
 
@@ -187,10 +214,26 @@ function minifyJs(source, outputName) {
 function bundleJs(patterns, outputPath, options) {
   const metadata = options.metadata;
   const source = expand(patterns)
-    .map((file) => replaceBuildMetadata(readText(file), metadata))
+    .map((file) => readBuildSource(file, metadata))
     .join('\n');
 
   writeText(outputPath, options.minify ? minifyJs(source, outputPath) : source);
+}
+
+function legacyTypeScriptPlugin() {
+  return {
+    name: 'behavior3-typescript',
+    transform(code, id) {
+      if (!id.endsWith('.ts')) {
+        return null;
+      }
+
+      return {
+        code: transpileTypeScript(id, code),
+        map: null
+      };
+    }
+  };
 }
 
 async function buildAppModule(outputPath, options) {
@@ -203,6 +246,7 @@ async function buildAppModule(outputPath, options) {
       moduleSideEffects: true
     },
     plugins: [
+      legacyTypeScriptPlugin(),
       vue(),
       {
         name: 'behavior3-build-metadata',
@@ -291,8 +335,8 @@ function copyFonts() {
 
 function copyEntryFiles(metadata) {
   for (const file of appEntry) {
-    const outputName = path.basename(file);
-    writeText(outputName, replaceBuildMetadata(readText(file), metadata));
+    const outputName = path.basename(file).replace(/\.ts$/, '.js');
+    writeText(outputName, readBuildSource(file, metadata));
   }
 }
 

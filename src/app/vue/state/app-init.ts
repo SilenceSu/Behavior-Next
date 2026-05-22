@@ -1,7 +1,7 @@
-import { bindDropNode } from '../directives/drop-node.js';
-import { editorBridge } from '../services/editor-bridge.js';
-import { projectState } from './project-state.js';
-import { settingsState } from './settings-state.js';
+import { bindDropNode } from '../directives/drop-node.ts';
+import { editorBridge } from '../services/editor-bridge.ts';
+import { projectState } from './project-state.ts';
+import { settingsState } from './settings-state.ts';
 
 var root = window;
 

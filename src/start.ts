@@ -2,8 +2,8 @@ import {
   exposeStartApp,
   root,
   setEditor
-} from './modules/compatibility.js';
-import { mountVueApp } from './app/vue/main.js';
+} from './modules/compatibility.ts';
+import { mountVueApp } from './app/vue/main.ts';
 
 function startApp() {
   setEditor(new root.b3e.editor.Editor());

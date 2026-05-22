@@ -1,8 +1,8 @@
-import { dialogService } from '../../services/dialog.js';
-import { editorBridge } from '../../services/editor-bridge.js';
-import { storageService } from '../../services/storage.js';
-import { systemService } from '../../services/system.js';
-import { notificationState } from '../../state/notification-state.js';
+import { dialogService } from '../../services/dialog.ts';
+import { editorBridge } from '../../services/editor-bridge.ts';
+import { storageService } from '../../services/storage.ts';
+import { systemService } from '../../services/system.ts';
+import { notificationState } from '../../state/notification-state.ts';
 
 var root = window;
 

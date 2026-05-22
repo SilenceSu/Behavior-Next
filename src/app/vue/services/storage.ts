@@ -1,4 +1,4 @@
-import { nodejsService } from './nodejs.js';
+import { nodejsService } from './nodejs.ts';
 
 var root = window;
 

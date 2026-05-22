@@ -1,5 +1,5 @@
-import { nodejsService } from './nodejs.js';
-import { dialogState } from '../state/dialog-state.js';
+import { nodejsService } from './nodejs.ts';
+import { dialogState } from '../state/dialog-state.ts';
 
 function getDialogConfig(title, text, type, options) {
   options = options || {};

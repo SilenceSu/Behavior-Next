@@ -1,4 +1,4 @@
-import { editorBridge } from '../services/editor-bridge.js';
+import { editorBridge } from '../services/editor-bridge.ts';
 
 function getName(binding, element) {
   return binding.value || element.getAttribute('data-name');

@@ -1,5 +1,5 @@
-import { KeyTable } from '../KeyTable.js';
-import { editorBridge } from '../../services/editor-bridge.js';
+import { KeyTable } from '../KeyTable.ts';
+import { editorBridge } from '../../services/editor-bridge.ts';
 
 function cloneProperties(properties) {
   return window.b3e.runtime.merge({}, properties);

@@ -1,4 +1,4 @@
-import { projectState } from '../state/project-state.js';
+import { projectState } from '../state/project-state.ts';
 
 export var DashLayout = {
   name: 'DashLayout',

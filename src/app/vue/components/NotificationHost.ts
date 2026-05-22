@@ -1,4 +1,4 @@
-import { notificationState } from '../state/notification-state.js';
+import { notificationState } from '../state/notification-state.ts';
 
 export var NotificationHost = {
   name: 'NotificationHost',

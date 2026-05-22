@@ -1,7 +1,7 @@
-import { App } from './App.js';
-import { router } from './router.js';
-import { dragNodeDirective } from './directives/drag-node.js';
-import { dropNodeDirective } from './directives/drop-node.js';
+import { App } from './App.ts';
+import { router } from './router.ts';
+import { dragNodeDirective } from './directives/drag-node.ts';
+import { dropNodeDirective } from './directives/drop-node.ts';
 
 var root = window;
 var mountedApp = null;

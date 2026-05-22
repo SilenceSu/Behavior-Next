@@ -1,6 +1,6 @@
-import { DialogHost } from './components/DialogHost.js';
-import { NotificationHost } from './components/NotificationHost.js';
-import { initializeApp } from './state/app-init.js';
+import { DialogHost } from './components/DialogHost.ts';
+import { NotificationHost } from './components/NotificationHost.ts';
+import { initializeApp } from './state/app-init.ts';
 
 export var App = {
   name: 'App',

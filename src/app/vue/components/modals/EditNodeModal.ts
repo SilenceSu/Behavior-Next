@@ -1,7 +1,7 @@
-import { KeyTable } from '../KeyTable.js';
-import { dialogService } from '../../services/dialog.js';
-import { editorBridge } from '../../services/editor-bridge.js';
-import { notificationState } from '../../state/notification-state.js';
+import { KeyTable } from '../KeyTable.ts';
+import { dialogService } from '../../services/dialog.ts';
+import { editorBridge } from '../../services/editor-bridge.ts';
+import { notificationState } from '../../state/notification-state.ts';
 
 var root = window;
 

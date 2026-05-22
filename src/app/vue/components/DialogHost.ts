@@ -1,4 +1,4 @@
-import { dialogState } from '../state/dialog-state.js';
+import { dialogState } from '../state/dialog-state.ts';
 
 var root = window;
 

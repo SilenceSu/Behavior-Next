@@ -1,8 +1,8 @@
-import { dialogService } from '../../services/dialog.js';
-import { editorBridge } from '../../services/editor-bridge.js';
-import { keyboardShortcuts } from '../../services/keyboard-shortcuts.js';
-import { notificationState } from '../../state/notification-state.js';
-import { projectState } from '../../state/project-state.js';
+import { dialogService } from '../../services/dialog.ts';
+import { editorBridge } from '../../services/editor-bridge.ts';
+import { keyboardShortcuts } from '../../services/keyboard-shortcuts.ts';
+import { notificationState } from '../../state/notification-state.ts';
+import { projectState } from '../../state/project-state.ts';
 
 function getProject() {
   return editorBridge.getProject();
