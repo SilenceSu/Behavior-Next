@@ -11,17 +11,17 @@
     "serve": "npm run dev",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run --root .",
     "dist": "node scripts/package-electron.js"
   },
   "devDependencies": {
     "@electron/packager": "^20.0.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@vitejs/plugin-vue": "^6.0.7",
-    "clean-css": "^5.3.3",
     "less": "^4.2.2",
     "typescript": "^6.0.3",
-    "uglify-js": "^3.19.3",
     "vite": "^7.2.4",
+    "vitest": "^4.1.7",
     "vue": "^3.5.34",
     "vue-router": "^4.6.4"
   },

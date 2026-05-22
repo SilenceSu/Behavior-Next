@@ -1,13 +1,13 @@
 # Behavior Next JSON 文件格式说明
 
-本文档描述 Behavior Next 导入/导出的 JSON 数据格式。该格式继承自 Behavior3 Editor 的行为树数据模型，当前项目在保留兼容性的基础上重构了应用层和导入/导出界面。所有文件均可使用 `.b3` 或 `.json` 作为扩展名。
+本文档描述 Behavior Next 导入/导出的 JSON 数据格式。该格式继承自 Behavior3 Editor 的行为树数据模型，当前由 Behavior Next Core 维护行为树运行时语义，并在保留兼容性的基础上重构了应用层和导入/导出界面。所有文件均可使用 `.b3` 或 `.json` 作为扩展名。
 
 导入/导出由以下文件实现：
 
-- `src/editor/editor/managers/ExportManager.js`
-- `src/editor/editor/managers/ImportManager.js`
-- `src/app/vue/components/modals/ExportModal.js`
-- `src/app/vue/components/modals/ImportModal.js`
+- `src/editor/editor/managers/ExportManager.ts`
+- `src/editor/editor/managers/ImportManager.ts`
+- `src/app/vue/components/modals/ExportModal.ts`
+- `src/app/vue/components/modals/ImportModal.ts`
 
 ---
 

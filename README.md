@@ -12,15 +12,17 @@ Behavior Next 基于 Behavior3 Editor 构建。原项目提供了行为树编辑
 
 ## 当前版本状态
 
-当前仓库已经从原始的 Bower/Gulp 工作流迁移到 npm + Vite。Web 端使用 Vue 3，桌面端通过 Electron 打包；画布编辑器核心仍沿用 CreateJS/Behavior3JS 的运行时概念，并通过模块入口统一管理。
+当前仓库主体已经完成现代化。项目使用 npm + Vite + TypeScript 作为源码和构建基础，Web 端使用 Vue 3，桌面端通过 Electron 打包；行为树核心由 Behavior Next Core 的 TypeScript 模块维护，并通过兼容层继续暴露旧的 `window.b3` API。CreateJS 仍用于画布渲染和交互层，但它属于长期画布层演进项，不阻塞当前项目作为现代化应用维护。
 
 主要运行时和构建依赖：
 
 - **Vue 3 + Vue Router**：应用 UI 和路由。
 - **Vite**：开发服务器、热重载和生产构建入口。
+- **TypeScript**：应用源码、编辑器源码和行为树核心均以 TypeScript 维护。
 - **Electron 42 + @electron/packager**：桌面应用打包。
 - **Font Awesome 7**：通过 `@fortawesome/fontawesome-free` 提供图标，并加载 v4 shims 兼容旧的 `fa fa-*` 类名。
-- **CreateJS、Creatine、Behavior3JS**：作为画布和行为树运行时库保留在 `src/assets/libs/`。
+- **Behavior Next Core**：`src/core/behavior/` 中的 TypeScript 行为树核心，维护状态常量、黑板、Tick、行为树加载/导出和默认节点。
+- **CreateJS**：画布渲染和交互层依赖，暂时保留在 `src/assets/libs/`，后续按画布层演进计划评估。
 
 
 ## 为什么选择 Behavior Next？
@@ -33,7 +35,7 @@ Behavior Next 专注于用可视化方式设计、组织和维护行为树，同
 
 - **行为树建模**：编辑器面向组合节点、装饰节点、动作节点和条件节点等常见行为树结构，适合为游戏 AI、机器人和通用仿真中的智能体建模。
 
-- **现代化应用结构**：UI、构建、桌面打包和依赖管理已经迁移到更容易维护的 npm/Vite/Vue/Electron 工作流。
+- **现代化应用结构**：UI、构建、桌面打包、依赖管理和行为树核心已经由 npm/Vite/TypeScript/Vue/Electron 工作流维护。
 
 - **简约而实用**：界面尽量减少非必要信息，重点放在设计、编辑和管理行为树上。
 
@@ -59,11 +61,12 @@ Behavior Next 主要在现代 Chromium 浏览器和 Electron 中验证。非 Chr
 
 ## 项目结构
 
-- `src/main.js`：应用模块入口，按顺序导入兼容层、编辑器引擎和 Vue 应用。
-- `src/modules/editor-engine.js`：显式导入 legacy 画布编辑器源码，保留 `window.b3e` 等全局兼容行为。
+- `src/main.ts`：应用模块入口，按顺序导入兼容层、编辑器引擎和 Vue 应用。
+- `src/core/behavior/`：Behavior Next Core，提供 TypeScript 行为树运行时，并通过兼容层暴露 `window.b3`。
+- `src/modules/editor-engine.ts`：显式导入画布编辑器源码，保留 `window.b3e` 等全局兼容行为。
 - `src/app/vue/`：Vue 3 UI、路由、状态和服务。
-- `src/assets/libs/`：CreateJS、Creatine、Behavior3JS 等 legacy 运行时库。
-- `scripts/legacy-build.js`：Vite 插件调用的旧资源构建脚本，负责合并 JS/CSS、编译 Less、复制图片和字体。
+- `src/assets/libs/`：CreateJS 画布运行时 vendor。
+- `scripts/legacy-build.js`：Vite 插件调用的资源构建脚本，负责合并 JS/CSS、编译 Less、复制图片和字体；压缩由 esbuild 处理。
 - `scripts/package-electron.js`：生产构建后调用 `@electron/packager` 打包桌面应用。
 - `build/`：Web 静态构建产物。
 - `dist/`：Electron 桌面应用打包产物。
@@ -118,8 +121,9 @@ Behavior Next 主要在现代 Chromium 浏览器和 Electron 中验证。非 Chr
 
 ## 维护说明
 
-- 新增编辑器引擎源码时，需要检查 `src/modules/editor-engine.js` 的导入顺序。
-- 新增 Vue 应用文件通常会被 `src/app/**/*.js` 或 `src/app/**/*.vue` 监听；如果新增资源不在现有范围内，需要更新 `scripts/legacy-build.js`。
+- 新增编辑器引擎源码时，需要检查 `src/modules/editor-engine.ts` 的导入顺序。
+- 新增 Vue 应用文件通常会被 `src/app/**/*.ts` 或 `src/app/**/*.vue` 监听；如果新增资源不在现有范围内，需要更新 `scripts/legacy-build.js`。
+- 行为树运行时位于 `src/core/behavior/`，修改后应运行 `npm run test` 和 `npm run typecheck`。
 - 源码中的 `[BUILD_VERSION]` 和 `[BUILD_DATE]` 会在构建时替换。
 - 旧图标类名通过 Font Awesome v4 shims 兼容；新增图标可以优先使用 Font Awesome 7 的类名。
 

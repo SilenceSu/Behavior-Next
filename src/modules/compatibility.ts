@@ -1,4 +1,8 @@
+import { installBehaviorCompat } from '../core/behavior/compat.ts';
+
 var root = window;
+
+installBehaviorCompat(root);
 
 root.b3e = root.b3e || {};
 root.b3e.draw = root.b3e.draw || {};

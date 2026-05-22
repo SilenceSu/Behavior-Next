@@ -2,18 +2,15 @@
 
 const fs = require('fs');
 const path = require('path');
-const CleanCSS = require('clean-css');
 const esbuild = require('esbuild');
 const less = require('less');
 const vue = require('@vitejs/plugin-vue');
-const UglifyJS = require('uglify-js');
 
 const rootDir = path.resolve(__dirname, '..');
 const outDir = path.join(rootDir, 'build');
 
 const vendorJs = [
   'src/assets/libs/createjs.min.js',
-  'src/assets/libs/behavior3js-0.1.0.min.js',
   'node_modules/vue/dist/vue.global.prod.js',
   'node_modules/vue-router/dist/vue-router.global.prod.js'
 ];
@@ -39,6 +36,7 @@ const appModuleEntry = 'src/main.ts';
 const appModuleSources = [
   'src/main.ts',
   'src/start.ts',
+  'src/core/**/*.ts',
   'src/modules/**/*.ts',
   'src/editor/**/*.ts',
   'src/app/**/*.ts',
@@ -201,14 +199,28 @@ function readBuildSource(file, metadata) {
 }
 
 function minifyJs(source, outputName) {
-  const result = UglifyJS.minify(source);
-
-  if (result.error) {
-    result.error.message = `${outputName}: ${result.error.message}`;
-    throw result.error;
+  try {
+    return esbuild.transformSync(source, {
+      loader: 'js',
+      target: 'es2018',
+      minify: true
+    }).code;
+  } catch (error) {
+    error.message = `${outputName}: ${error.message}`;
+    throw error;
   }
+}
 
-  return result.code;
+function minifyCss(source, outputName) {
+  try {
+    return esbuild.transformSync(source, {
+      loader: 'css',
+      minify: true
+    }).code;
+  } catch (error) {
+    error.message = `${outputName}: ${error.message}`;
+    throw error;
+  }
 }
 
 function bundleJs(patterns, outputPath, options) {
@@ -285,13 +297,7 @@ async function buildAppModule(outputPath, options) {
 
 function bundleCss(patterns, outputPath) {
   const source = expand(patterns).map(readText).join('\n');
-  const result = new CleanCSS({ rebase: false }).minify(source);
-
-  if (result.errors.length) {
-    throw new Error(`${outputPath}: ${result.errors.join(', ')}`);
-  }
-
-  writeText(outputPath, result.styles);
+  writeText(outputPath, minifyCss(source, outputPath));
 }
 
 async function buildLess(outputPath) {
@@ -300,13 +306,8 @@ async function buildLess(outputPath) {
     filename: sourcePath,
     paths: [path.dirname(sourcePath)]
   });
-  const result = new CleanCSS({ rebase: false }).minify(rendered.css);
 
-  if (result.errors.length) {
-    throw new Error(`${outputPath}: ${result.errors.join(', ')}`);
-  }
-
-  writeText(outputPath, result.styles);
+  writeText(outputPath, minifyCss(rendered.css, outputPath));
 }
 
 function minifyHtml(source) {
