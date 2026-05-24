@@ -17,6 +17,7 @@ Behavior Next 基于 Behavior3 Editor 构建。原项目提供了行为树编辑
 主要运行时和构建依赖：
 
 - **Vue 3 + Vue Router**：应用 UI 和路由。
+- **Element Plus**：UI 组件库，通过 IIFE 全局变量引入（`window.ElementPlus`），与 `window.Vue` 模式一致。
 - **Vite**：开发服务器、热重载和生产构建入口。
 - **TypeScript**：应用源码、编辑器源码和行为树核心均以 TypeScript 维护。
 - **Electron 42 + @electron/packager**：桌面应用打包。
@@ -35,7 +36,9 @@ Behavior Next 专注于用可视化方式设计、组织和维护行为树，同
 
 - **行为树建模**：编辑器面向组合节点、装饰节点、动作节点和条件节点等常见行为树结构，适合为游戏 AI、机器人和通用仿真中的智能体建模。
 
-- **现代化应用结构**：UI、构建、桌面打包、依赖管理和行为树核心已经由 npm/Vite/TypeScript/Vue/Electron 工作流维护。
+- **现代化应用结构**：UI、构建、桌面打包、依赖管理和行为树核心已经由 npm/Vite/TypeScript/Vue 3/Element Plus/Electron 工作流维护。
+
+- **深色/亮色主题**：内置深色和亮色两套 UI 主题，可在设置中切换；画布配色预设独立管理，支持 Dark、Light、Midnight、Solarized 四套预设。
 
 - **简约而实用**：界面尽量减少非必要信息，重点放在设计、编辑和管理行为树上。
 

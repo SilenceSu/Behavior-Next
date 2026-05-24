@@ -20,7 +20,9 @@ Behavior Next focuses on visual behavior tree design while keeping an open data 
 
 - **Behavior Tree Modeling**: the editor supports common behavior tree structures such as composite, decorator, action, and condition nodes.
 
-- **Modern Application Structure**: the UI, build pipeline, desktop packaging, and dependency management have moved to an npm/Vite/Vue/Electron workflow.
+- **Modern Application Structure**: the UI, build pipeline, desktop packaging, and dependency management have moved to an npm/Vite/TypeScript/Vue 3/Element Plus/Electron workflow.
+
+- **Dark and Light Themes**: built-in dark and light UI themes switchable from settings. Canvas color presets (Dark, Light, Midnight, Solarized) are managed independently.
 
 - **Minimalist, but Functional**: the interface avoids unnecessary noise and focuses on designing, editing, and managing behavior trees.
 
