@@ -19,13 +19,11 @@ export default {
   },
 
   mounted: function() {
-    // 页面进入时刷新最近项目列表，Web/Electron 存储由 projectState 内部区分。
     projectState.getRecentProjects();
   },
 
   methods: {
     createUuid: function() {
-      // Web 项目使用 UUID 生成 localStorage key；兼容层未就绪时退回时间戳。
       return root.b3 && root.b3.createUUID ? root.b3.createUUID() : String(Date.now());
     },
 
@@ -62,7 +60,6 @@ export default {
           });
       };
 
-      // 当前编辑器有未保存修改时，先确认是否离开，避免静默丢失项目内容。
       if (editorBridge.isDirty()) {
         dialogService
           .confirm('Leave without saving?', 'If you proceed you will lose all unsaved modifications.', null, { closeOnConfirm: false })
@@ -95,7 +92,6 @@ export default {
         }
       };
 
-      // 打开其他项目会替换当前编辑器状态，因此同样需要处理 dirty 状态。
       if (editorBridge.isDirty()) {
         dialogService
           .confirm('Leave without saving?', 'If you proceed you will lose all unsaved modifications.')
@@ -106,7 +102,6 @@ export default {
     },
 
     editProject: function() {
-      // 重命名只更新项目元数据，不改变树和节点内容。
       var project = projectState.getProject();
       dialogService
         .prompt('Rename project', null, 'input', project.name)
@@ -140,7 +135,6 @@ export default {
         projectState.closeProject();
       };
 
-      // 关闭项目不删除存储，只清空当前编辑器会话。
       if (editorBridge.isDirty()) {
         dialogService
           .confirm('Leave without saving?', 'If you proceed you will lose all unsaved modifications.', null)
@@ -151,7 +145,6 @@ export default {
     },
 
     removeProject: function(path) {
-      // 删除最近项目记录/存储文件前必须确认，Electron 和 Web 的实际删除由状态层处理。
       dialogService
         .confirm('Remove project?', 'Are you sure you want to remove this project?')
         .then(function() {
@@ -172,34 +165,65 @@ export default {
   <nav class="page-operations">
     <div class="page-operations-content">
       <ul>
-        <li v-if="isDesktop"><button class="b3-button b3-button-neutral" @click="openProject()"><i class="fa fa-folder-open-o"></i> Open Project</button></li>
-        <li><button class="b3-button b3-button-confirm" @click="newProject()"><i class="fa fa-plus"></i> New Project</button></li>
+        <li v-if="isDesktop">
+          <el-button @click="openProject()">
+            <i class="fa fa-folder-open-o"></i> Open Project
+          </el-button>
+        </li>
+        <li>
+          <el-button type="success" @click="newProject()">
+            <i class="fa fa-plus"></i> New Project
+          </el-button>
+        </li>
       </ul>
     </div>
   </nav>
   <div class="content">
-    <div v-if="!projectsState.recentProjects.length"><p>You don't have any project yet.</p></div>
-    <table class="b3-data-sheet b3-data-sheet-striped" v-if="projectsState.recentProjects.length">
-      <tr v-for="(item, index) in projectsState.recentProjects" :key="index" :class="{'b3-state-current': item.isOpen}">
-        <td v-if="item.isOpen" class="b3-state-current">
-          <div class="b3-action-group b3-float-right" role="group">
-            <router-link class="b3-button b3-button-accent" to="/editor"><i class="fa fa-arrow-circle-o-left"></i> Editor</router-link>
-            <button type="button" class="b3-button b3-button-confirm" @click="saveProject()"><i class="fa fa-save"></i> Save</button>
-            <button type="button" class="b3-button b3-button-neutral" @click="editProject()"><i class="fa fa-pencil"></i> Rename</button>
-            <button type="button" class="b3-button b3-button-neutral" @click="closeProject()"><i class="fa fa-close"></i> Close</button>
+    <el-empty v-if="!projectsState.recentProjects.length" description="You don't have any project yet." />
+
+    <el-table
+      v-if="projectsState.recentProjects.length"
+      :data="projectsState.recentProjects"
+      :row-class-name="(row) => row.row.isOpen ? 'current-project-row' : ''"
+      style="width: 100%"
+    >
+      <el-table-column label="Project">
+        <template #default="{ row }">
+          <div v-if="row.isOpen">
+            <el-tag type="success" size="small" style="margin-bottom: 4px;">Current project</el-tag>
+            <div style="font-weight: 600; font-size: 15px; margin-top: 4px;">{{ row.name }}</div>
           </div>
-          <small><em>Current project</em></small>
-          <h3 class="current-project">{{ item.name }}</h3>
-        </td>
-        <td v-else>
-          <div class="b3-action-group b3-float-right" role="group">
-            <button type="button" class="b3-button b3-button-accent b3-button-small" @click="openProject(item.path)"><i class="fa fa-folder-open-o"></i> Open</button>
-            <button type="button" class="b3-button b3-button-danger b3-button-small" @click="removeProject(item.path)"><i class="fa fa-trash-o"></i> Remove</button>
-          </div>
-          <p>{{ item.name }}</p>
-        </td>
-      </tr>
-    </table>
+          <div v-else style="font-size: 14px;">{{ row.name }}</div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Actions" width="320" align="right">
+        <template #default="{ row }">
+          <el-button-group v-if="row.isOpen">
+            <el-button type="primary" size="small" @click="$router.push('/editor')">
+              <i class="fa fa-arrow-circle-o-left"></i> Editor
+            </el-button>
+            <el-button type="success" size="small" @click="saveProject()">
+              <i class="fa fa-save"></i> Save
+            </el-button>
+            <el-button size="small" @click="editProject()">
+              <i class="fa fa-pencil"></i> Rename
+            </el-button>
+            <el-button size="small" @click="closeProject()">
+              <i class="fa fa-close"></i> Close
+            </el-button>
+          </el-button-group>
+          <el-button-group v-else>
+            <el-button type="primary" size="small" @click="openProject(row.path)">
+              <i class="fa fa-folder-open-o"></i> Open
+            </el-button>
+            <el-button type="danger" size="small" @click="removeProject(row.path)">
+              <i class="fa fa-trash-o"></i> Remove
+            </el-button>
+          </el-button-group>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </div>
 </template>

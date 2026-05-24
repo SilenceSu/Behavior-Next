@@ -1,24 +1,41 @@
 // COLORS =====================================================================
-@color-dark1        : #0B0B0B;
-@color-dark2        : #333333;
-@color-dark3        : #2F2F2F;
-@color-dark4        : #454545;
-@color-light1       : #FFFFFF;
-@color-light2       : #CECECE;
-@color-light3       : #999999;
-@color-light4       : #545454;
-@color-blue         : #5bc0de;
-@color-red          : #D9534F;
-@color-yellow       : #D58512;
-@color-green        : #398439;
-@color-blue-light   : lighten(@color-blue, 10%);
-@color-blue-dark    : darken(@color-blue, 30%);
-@color-red-light    : lighten(@color-red, 10%);
-@color-red-dark     : darken(@color-red, 30%);
-@color-yellow-light : lighten(@color-yellow, 10%);
-@color-yellow-dark  : darken(@color-yellow, 30%);
-@color-green-light  : lighten(@color-green, 10%);
-@color-green-dark   : darken(@color-green, 30%);
+// 颜色变量桥接到 CSS 自定义属性，主题定义见 themes.less。
+// LESS 的 lighten()/darken() 已由 color-mix() 替代，派生色直接引用变量。
+@color-dark1:        var(--color-dark1);
+@color-dark2:        var(--color-dark2);
+@color-dark3:        var(--color-dark3);
+@color-dark4:        var(--color-dark4);
+@color-light1:       var(--color-light1);
+@color-light2:       var(--color-light2);
+@color-light3:       var(--color-light3);
+@color-light4:       var(--color-light4);
+@color-blue:         var(--color-blue);
+@color-red:          var(--color-red);
+@color-yellow:       var(--color-yellow);
+@color-green:        var(--color-green);
+@color-accent:       var(--color-accent);
+@color-blue-light:   var(--color-blue-light);
+@color-blue-dark:    var(--color-blue-dark);
+@color-red-light:    var(--color-red-light);
+@color-red-dark:     var(--color-red-dark);
+@color-yellow-light: var(--color-yellow-light);
+@color-yellow-dark:  var(--color-yellow-dark);
+@color-green-light:  var(--color-green-light);
+@color-green-dark:   var(--color-green-dark);
+
+// c_controls / c_page 中的按钮/输入框派生色
+@color-light1-hover:      var(--color-light1-hover);
+@color-green-border:      var(--color-green-border);
+@color-green-hover:       var(--color-green-hover);
+@color-red-border:        var(--color-red-border);
+@color-red-hover:         var(--color-red-hover);
+@color-blue-border:       var(--color-blue-border);
+@color-blue-hover:        var(--color-blue-hover);
+@color-light2-disabled:   var(--color-light2-disabled);
+@color-light2-stripe:     var(--color-light2-stripe);
+@color-blue-state:        var(--color-blue-state);
+@color-light2-box-head:   var(--color-light2-box-head);
+@color-light2-node-title: var(--color-light2-node-title);
 
 // LAYER DEPTH ================================================================
 @z-editor: 0;
@@ -56,9 +73,10 @@
   font-weight: 300;
 }
 
+// box-shadow 颜色使用 CSS 自定义属性，确保主题切换时同步更新
 .box-shadow(@style) {
-  -webkit-box-shadow: @style @color-dark1;
-  box-shadow:         @style @color-dark1;
+  -webkit-box-shadow: @style var(--color-dark1);
+  box-shadow:         @style var(--color-dark1);
 }
 
 // ANIMATIONS =================================================================

@@ -43,40 +43,40 @@
 
   &:hover,
   &:focus {
-    background-color: darken(@color-light1, 8%);
+    background-color: @color-light1-hover;
   }
 }
 
 .b3-button-confirm {
   color: @color-light1;
   background-color: @color-green;
-  border-color: darken(@color-green, 5%);
+  border-color: @color-green-border;
 
   &:hover,
   &:focus {
-    background-color: darken(@color-green, 8%);
+    background-color: @color-green-hover;
   }
 }
 
 .b3-button-danger {
   color: @color-light1;
   background-color: @color-red;
-  border-color: darken(@color-red, 5%);
+  border-color: @color-red-border;
 
   &:hover,
   &:focus {
-    background-color: darken(@color-red, 8%);
+    background-color: @color-red-hover;
   }
 }
 
 .b3-button-accent {
   color: @color-light1;
   background-color: @color-blue;
-  border-color: darken(@color-blue, 5%);
+  border-color: @color-blue-border;
 
   &:hover,
   &:focus {
-    background-color: darken(@color-blue, 8%);
+    background-color: @color-blue-hover;
   }
 }
 
@@ -159,7 +159,7 @@
   &[readonly],
   fieldset[disabled] & {
     cursor: inherit;
-    background-color: lighten(@color-light2, 12%);
+    background-color: @color-light2-disabled;
     opacity: 1;
   }
 }
@@ -275,7 +275,7 @@ input[type="color"].b3-input {
 
 .b3-data-sheet-striped {
   tbody tr:nth-of-type(odd) {
-    background-color: lighten(@color-light2, 15%);
+    background-color: @color-light2-stripe;
   }
 }
 
@@ -288,7 +288,7 @@ input[type="color"].b3-input {
 
 .b3-state-current > td,
 .b3-state-current {
-  background-color: lighten(@color-blue, 30%);
+  background-color: @color-blue-state;
 }
 
 .b3-box {
@@ -303,7 +303,7 @@ input[type="color"].b3-input {
   border-bottom: 1px solid @color-light2;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  background-color: lighten(@color-light2, 15%);
+  background-color: @color-light2-box-head;
 
   h1,
   h2,

@@ -14,6 +14,19 @@ export function mountVueApp(selector) {
 
   var app = root.Vue.createApp(App);
   app.use(router);
+
+  // 注册 Element Plus（通过全局 IIFE 变量）
+  if (root.ElementPlus) {
+    app.use(root.ElementPlus);
+  }
+
+  // 注册 Element Plus 图标（通过全局 IIFE 变量）
+  if (root.ElementPlusIconsVue) {
+    Object.keys(root.ElementPlusIconsVue).forEach(function(key) {
+      app.component(key, root.ElementPlusIconsVue[key]);
+    });
+  }
+
   app.directive('drag-node', dragNodeDirective);
   app.directive('drop-node', dropNodeDirective);
   var component = app.mount(selector || '#app');

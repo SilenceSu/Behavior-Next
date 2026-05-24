@@ -1,0 +1,83 @@
+// THEMES =====================================================================
+// CSS 自定义属性主题定义。
+// 深色主题为默认值，亮色主题通过 [data-theme="light"] 覆盖。
+// 切换方式：document.documentElement.dataset.theme = 'light' | 'dark'
+
+:root {
+  // 深色主题（默认）
+  --color-dark1:        #0B0B0B;
+  --color-dark2:        #333333;
+  --color-dark3:        #2F2F2F;
+  --color-dark4:        #454545;
+  --color-light1:       #FFFFFF;
+  --color-light2:       #CECECE;
+  --color-light3:       #999999;
+  --color-light4:       #545454;
+  --color-blue:         #5bc0de;
+  --color-red:          #D9534F;
+  --color-yellow:       #D58512;
+  --color-green:        #398439;
+  --color-accent:       #4BB2FD;
+
+  // 派生色：用 color-mix 替代 LESS 的 lighten()/darken()
+  --color-blue-light:   color-mix(in srgb, #5bc0de 70%, white);
+  --color-blue-dark:    color-mix(in srgb, #5bc0de 40%, black);
+  --color-red-light:    color-mix(in srgb, #D9534F 70%, white);
+  --color-red-dark:     color-mix(in srgb, #D9534F 40%, black);
+  --color-yellow-light: color-mix(in srgb, #D58512 70%, white);
+  --color-yellow-dark:  color-mix(in srgb, #D58512 40%, black);
+  --color-green-light:  color-mix(in srgb, #398439 70%, white);
+  --color-green-dark:   color-mix(in srgb, #398439 40%, black);
+
+  // c_controls.less 中的按钮/输入框派生色
+  --color-light1-hover:      color-mix(in srgb, #FFFFFF 92%, black);   // darken(light1, 8%)
+  --color-green-border:      color-mix(in srgb, #398439 95%, black);   // darken(green, 5%)
+  --color-green-hover:       color-mix(in srgb, #398439 92%, black);   // darken(green, 8%)
+  --color-red-border:        color-mix(in srgb, #D9534F 95%, black);   // darken(red, 5%)
+  --color-red-hover:         color-mix(in srgb, #D9534F 92%, black);   // darken(red, 8%)
+  --color-blue-border:       color-mix(in srgb, #5bc0de 95%, black);   // darken(blue, 5%)
+  --color-blue-hover:        color-mix(in srgb, #5bc0de 92%, black);   // darken(blue, 8%)
+  --color-light2-disabled:   color-mix(in srgb, #CECECE 88%, white);   // lighten(light2, 12%)
+  --color-light2-stripe:     color-mix(in srgb, #CECECE 85%, white);   // lighten(light2, 15%)
+  --color-blue-state:        color-mix(in srgb, #5bc0de 70%, white);   // lighten(blue, 30%)
+  --color-light2-box-head:   color-mix(in srgb, #CECECE 85%, white);   // lighten(light2, 15%)
+  --color-light2-node-title: color-mix(in srgb, #CECECE 83%, white);   // lighten(light2, 17%)
+}
+
+[data-theme="light"] {
+  --color-dark1:        #F0F0F0;
+  --color-dark2:        #DEDEDE;
+  --color-dark3:        #E8E8E8;
+  --color-dark4:        #D0D0D0;
+  --color-light1:       #1A1A1A;
+  --color-light2:       #555555;
+  --color-light3:       #888888;
+  --color-light4:       #AAAAAA;
+  --color-blue:         #2196F3;
+  --color-red:          #E53935;
+  --color-yellow:       #F57C00;
+  --color-green:        #388E3C;
+  --color-accent:       #1565C0;
+
+  --color-blue-light:   color-mix(in srgb, #2196F3 70%, white);
+  --color-blue-dark:    color-mix(in srgb, #2196F3 40%, black);
+  --color-red-light:    color-mix(in srgb, #E53935 70%, white);
+  --color-red-dark:     color-mix(in srgb, #E53935 40%, black);
+  --color-yellow-light: color-mix(in srgb, #F57C00 70%, white);
+  --color-yellow-dark:  color-mix(in srgb, #F57C00 40%, black);
+  --color-green-light:  color-mix(in srgb, #388E3C 70%, white);
+  --color-green-dark:   color-mix(in srgb, #388E3C 40%, black);
+
+  --color-light1-hover:      color-mix(in srgb, #1A1A1A 92%, white);
+  --color-green-border:      color-mix(in srgb, #388E3C 95%, black);
+  --color-green-hover:       color-mix(in srgb, #388E3C 92%, black);
+  --color-red-border:        color-mix(in srgb, #E53935 95%, black);
+  --color-red-hover:         color-mix(in srgb, #E53935 92%, black);
+  --color-blue-border:       color-mix(in srgb, #2196F3 95%, black);
+  --color-blue-hover:        color-mix(in srgb, #2196F3 92%, black);
+  --color-light2-disabled:   color-mix(in srgb, #555555 88%, white);
+  --color-light2-stripe:     color-mix(in srgb, #555555 85%, white);
+  --color-blue-state:        color-mix(in srgb, #2196F3 70%, white);
+  --color-light2-box-head:   color-mix(in srgb, #555555 85%, white);
+  --color-light2-node-title: color-mix(in srgb, #555555 83%, white);
+}

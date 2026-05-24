@@ -1,92 +1,93 @@
 var root = window;
-var nextId = 1;
 
-var state = root.Vue.reactive({
-  current: null,
-  queue: []
-});
+// 用 ElMessageBox 替换自定义弹窗实现，对外接口保持不变。
+// 所有调用方（dialogService、各 view）无需修改。
 
-function pump() {
-  if (!state.current && state.queue.length) {
-    state.current = state.queue.shift();
-  }
+function getElMessageBox() {
+  return root.ElementPlus && root.ElementPlus.ElMessageBox;
 }
 
-function enqueue(kind, config) {
-  config = config || {};
+function enqueueAlert(config) {
+  var ElMessageBox = getElMessageBox();
+  if (!ElMessageBox) {
+    return Promise.resolve();
+  }
 
-  return new Promise(function(resolve, reject) {
-    state.queue.push(Object.assign({
-      id: nextId++,
-      kind: kind,
-      title: '',
-      text: '',
-      type: 'default',
-      placeholder: '',
-      defaultValue: '',
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      showCancelButton: kind !== 'alert',
-      resolve: resolve,
-      reject: reject
-    }, config));
+  return ElMessageBox.alert(config.text || '', config.title || '', {
+    confirmButtonText: config.confirmButtonText || 'OK',
+    type: config.type === 'error' ? 'error' : config.type === 'warning' ? 'warning' : 'info',
+    dangerouslyUseHTMLString: false
+  }).catch(function() {});
+}
 
-    pump();
+function enqueueConfirm(config) {
+  var ElMessageBox = getElMessageBox();
+  if (!ElMessageBox) {
+    return Promise.reject();
+  }
+
+  return ElMessageBox.confirm(config.text || '', config.title || '', {
+    confirmButtonText: config.confirmButtonText || 'OK',
+    cancelButtonText: config.cancelButtonText || 'Cancel',
+    type: config.type === 'error' ? 'error' : config.type === 'warning' ? 'warning' : 'warning',
+    dangerouslyUseHTMLString: false
+  }).then(function(action) {
+    if (action === 'confirm') {
+      return action;
+    }
+    return Promise.reject();
+  }).catch(function(action) {
+    if (action === 'cancel' || action === 'close') {
+      return Promise.reject();
+    }
+    return Promise.reject();
   });
 }
 
-function settle(request, confirmed, value) {
-  if (!request || !state.current || request.id !== state.current.id) {
-    return;
+function enqueuePrompt(config) {
+  var ElMessageBox = getElMessageBox();
+  if (!ElMessageBox) {
+    return Promise.reject();
   }
 
-  state.current = null;
-
-  if (confirmed) {
-    request.resolve(value);
-  } else {
-    request.reject(value);
-  }
-
-  root.setTimeout(pump, 0);
-}
-
-function clear() {
-  var pending = [];
-  if (state.current) {
-    pending.push(state.current);
-  }
-
-  pending = pending.concat(state.queue.splice(0, state.queue.length));
-  state.current = null;
-
-  pending.forEach(function(request) {
-    request.reject();
+  return ElMessageBox.prompt(config.text || '', config.title || '', {
+    confirmButtonText: config.confirmButtonText || 'OK',
+    cancelButtonText: config.cancelButtonText || 'Cancel',
+    inputPlaceholder: config.placeholder || '',
+    inputValue: config.defaultValue || '',
+    dangerouslyUseHTMLString: false
+  }).then(function(result) {
+    if (result && result.value !== null && result.value !== undefined) {
+      return result.value;
+    }
+    return Promise.reject();
+  }).catch(function() {
+    return Promise.reject();
   });
 }
 
 export var dialogState = {
-  state: state,
+  state: root.Vue.reactive({ current: null, queue: [] }),
 
   alert: function(config) {
-    return enqueue('alert', config);
+    return enqueueAlert(config);
   },
 
   confirm: function(config) {
-    return enqueue('confirm', config);
+    return enqueueConfirm(config);
   },
 
   prompt: function(config) {
-    return enqueue('prompt', config);
+    return enqueuePrompt(config);
   },
 
-  confirmRequest: function(request, value) {
-    settle(request, true, value);
-  },
-
-  cancelRequest: function(request) {
-    settle(request, false);
-  },
-
-  clear: clear
+  // 以下方法保留签名兼容性，ElMessageBox 不需要手动 settle
+  confirmRequest: function() {},
+  cancelRequest: function() {},
+  clear: function() {
+    var ElMessageBox = getElMessageBox();
+    if (ElMessageBox) {
+      ElMessageBox.close();
+    }
+  }
 };

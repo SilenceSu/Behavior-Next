@@ -19,6 +19,7 @@
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@vitejs/plugin-vue": "^6.0.7",
     "less": "^4.2.2",
+    "rollup": "^4.60.4",
     "typescript": "^6.0.3",
     "vite": "^7.2.4",
     "vitest": "^4.1.7",
@@ -27,5 +28,9 @@
   },
   "optionalDependencies": {
     "electron": "^42.2.0"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "element-plus": "^2.14.0"
   }
 }

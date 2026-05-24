@@ -244,7 +244,7 @@ export default {
   <div class="menubar-left">
     <div class="side">
       <ul>
-        <li><a class="logo" title="behavior3.com" href="http://behavior3.com" target="_blank">Behavior3</a></li>
+        <li><router-link class="logo" title="Home" to="/dash/projects">Behavior Next</router-link></li>
         <li><router-link class="fastlink" title="All projects" to="/dash/projects"><i class="fa fa-fw fa-arrow-circle-o-left"></i></router-link></li>
         <li><router-link class="fastlink" title="Settings" to="/dash/settings"><i class="fa fa-fw fa-cog"></i></router-link></li>
         <li><a class="fastlink" title="Save project" @click="onSaveProject"><i class="fa fa-fw fa-save"></i></a></li>

@@ -6,7 +6,6 @@ import { notificationState } from '../../state/notification-state.ts';
 
 var root = window;
 
-// 自定义节点编辑弹窗：创建或更新项目级节点类型定义。
 export default {
   name: 'EditNodeModal',
   components: {
@@ -18,13 +17,13 @@ export default {
       action: 'New',
       node: null,
       original: null,
-      blacklist: []
+      blacklist: [],
+      visible: true
     };
   },
 
   computed: {
     invalidName: function() {
-      // 名称为空或与其他节点冲突时禁止保存。
       return !this.node || !this.node.name || this.blacklist.indexOf(this.node.name) !== -1;
     }
   },
@@ -36,12 +35,12 @@ export default {
   watch: {
     '$route.params.name': function() {
       this.loadNode();
+      this.visible = true;
     }
   },
 
   methods: {
     loadNode: function() {
-      // 有路由参数时编辑已有节点；没有参数时创建新的自定义节点。
       var project = editorBridge.getProject();
       var name = this.$route.params.name;
 
@@ -57,7 +56,6 @@ export default {
         this.action = 'New';
       }
 
-      // 黑名单排除当前节点自身，用于判断重命名是否冲突。
       var blacklist = [];
       project.nodes.each(function(node) {
         if (node.name !== this.node.name) {
@@ -68,12 +66,10 @@ export default {
     },
 
     updateProperties: function(properties) {
-      // KeyTable 返回完整属性对象，直接替换节点属性。
       this.node.properties = properties;
     },
 
     save: function() {
-      // 更新或新增都通过旧 NodeManager，确保历史记录和画布刷新逻辑一致。
       if (this.invalidName) {
         return;
       }
@@ -87,11 +83,10 @@ export default {
         notificationState.success('Node created', 'Node has been created successfully.');
       }
 
-      this.$router.push('/editor');
+      this.close();
     },
 
     remove: function() {
-      // 删除节点类型会移除所有使用该类型的块，必须确认。
       var self = this;
       dialogService
         .confirm('Remove node?', 'Are you sure you want to remove this node?\n\nNote: all blocks using this node will be removed.')
@@ -99,12 +94,12 @@ export default {
           var project = editorBridge.getProject();
           project.nodes.remove(self.original);
           notificationState.success('Node removed', 'The node has been removed from this project.');
-          self.$router.push('/editor');
+          self.close();
         });
     },
 
     close: function() {
-      // 弹窗由子路由承载，关闭时回到编辑器主路由。
+      this.visible = false;
       this.$router.push('/editor');
     }
   }
@@ -112,50 +107,69 @@ export default {
 </script>
 
 <template>
-<div class="b3modal">
-  <div class="b3modal-background" @click="close"></div>
-  <div class="b3modal-window">
-    <form v-if="node" class="full-height" @submit.prevent="save">
-      <div class="b3modal-wrap">
-        <h1 class="b3modal-title">{{ action }} node</h1>
-        <div class="b3modal-content">
-          <div class="b3-layout">
-            <div class="b3-field b3-span-4" :class="{'b3-field-error': invalidName}">
-              <label for="name" class="b3-field-label">Name</label>
-              <input type="text" class="b3-input" name="name" v-model="node.name" required autofocus>
-              <p class="b3-help" v-if="blacklist.indexOf(node.name) !== -1">Node already exists</p>
-            </div>
-            <div class="b3-field b3-span-4">
-              <label for="title" class="b3-field-label">Title</label>
-              <input type="text" class="b3-input" name="title" v-model="node.title">
-            </div>
-            <div class="b3-field b3-span-4">
-              <label for="category" class="b3-field-label">Category</label>
-              <select class="b3-input" v-model="node.category" :disabled="!!original">
-                <option value="composite">Composite</option>
-                <option value="decorator">Decorator</option>
-                <option value="action">Action</option>
-                <option value="condition">Condition</option>
-              </select>
-            </div>
-          </div>
-          <div class="b3-layout">
-            <div class="b3-field b3-span-6">
-              <label for="description" class="b3-field-label">Description</label>
-              <textarea name="description" class="b3-input" rows="14" v-model="node.description"></textarea>
-            </div>
-            <div class="b3-field b3-span-6">
-              <KeyTable heading="Properties" :model-value="node.properties" @update:model-value="updateProperties"></KeyTable>
-            </div>
-          </div>
-        </div>
+<el-dialog
+  v-model="visible"
+  :title="action + ' node'"
+  width="760px"
+  :before-close="close"
+  destroy-on-close
+>
+  <el-form v-if="node" label-position="top">
+    <el-row :gutter="16">
+      <el-col :span="8">
+        <el-form-item
+          label="Name"
+          :error="blacklist.indexOf(node.name) !== -1 ? 'Node already exists' : ''"
+        >
+          <el-input v-model="node.name" placeholder="Name" autofocus />
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="Title">
+          <el-input v-model="node.title" placeholder="Title" />
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="Category">
+          <el-select v-model="node.category" :disabled="!!original" style="width: 100%">
+            <el-option value="composite" label="Composite" />
+            <el-option value="decorator" label="Decorator" />
+            <el-option value="action" label="Action" />
+            <el-option value="condition" label="Condition" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="16">
+      <el-col :span="12">
+        <el-form-item label="Description">
+          <el-input
+            v-model="node.description"
+            type="textarea"
+            :rows="10"
+            placeholder="Description"
+          />
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <KeyTable
+          heading="Properties"
+          :model-value="node.properties"
+          @update:model-value="updateProperties"
+        />
+      </el-col>
+    </el-row>
+  </el-form>
+
+  <template #footer>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <el-button v-if="original" type="danger" @click="remove">Remove</el-button>
+      <div v-else></div>
+      <div>
+        <el-button @click="close">Cancel</el-button>
+        <el-button type="success" :disabled="invalidName" @click="save">Save</el-button>
       </div>
-      <div class="b3modal-buttons">
-        <input type="button" class="b3-button b3-button-danger b3-button-large b3-float-left" @click="remove" value="Remove" v-if="original">
-        <input type="button" class="b3-button b3-button-neutral b3-button-large" @click="close" value="Cancel">
-        <button type="submit" class="b3-button b3-button-confirm b3-button-large" :disabled="invalidName">Save</button>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
+  </template>
+</el-dialog>
 </template>

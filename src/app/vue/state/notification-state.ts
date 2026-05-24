@@ -1,46 +1,53 @@
 var root = window;
-var nextId = 1;
+
+// 用 ElNotification 替换自定义通知实现，对外接口保持不变。
+// 所有调用方无需修改。
 
 var state = root.Vue.reactive({
   notifications: []
 });
 
+function getElNotification() {
+  return root.ElementPlus && root.ElementPlus.ElNotification;
+}
+
+var typeIconMap = {
+  success: 'success',
+  error: 'error',
+  warning: 'warning',
+  info: 'info',
+  default: 'info'
+};
+
 function notify(config) {
+  var ElNotification = getElNotification();
+
+  if (ElNotification) {
+    ElNotification({
+      title: config.title || '',
+      message: config.message || '',
+      type: typeIconMap[config.type] || 'info',
+      duration: typeof config.delay === 'number' ? config.delay : 3000,
+      position: 'bottom-right'
+    });
+  }
+
+  // 保留 state.notifications 以防有组件直接读取（向后兼容）
   var item = Object.assign({
-    id: nextId++,
+    id: Date.now(),
     type: 'default',
     title: '',
     message: '',
     icon: false,
     delay: 3000,
-    started: false,
+    started: true,
     killed: false
   }, config || {});
-
-  state.notifications.push(item);
-
-  root.setTimeout(function() {
-    item.started = true;
-  }, 0);
-
-  if (typeof item.delay === 'number') {
-    root.setTimeout(function() {
-      remove(item);
-    }, item.delay);
-  }
 
   return item;
 }
 
-function remove(item) {
-  item.killed = true;
-  root.setTimeout(function() {
-    var index = state.notifications.indexOf(item);
-    if (index !== -1) {
-      state.notifications.splice(index, 1);
-    }
-  }, 500);
-}
+function remove() {}
 
 export var notificationState = {
   state: state,

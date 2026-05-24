@@ -39,7 +39,7 @@
   background-color: @color-dark1;
 }
 .menubar ul li a {
-  color: #FFFFFF;
+  color: @color-light1;
   display: block;
   height: 35px;
   padding: 0px 10px;
@@ -48,7 +48,7 @@
   .no-select;
 
   .shortcut {
-    color: #999;
+    color: @color-light3;
     float: right;
     font-style: italic;
   }
@@ -69,8 +69,8 @@
   }
 
   .logo {
-    color: #4BB2FD;
-    background-color: #333333;
+    color: @color-accent;
+    background-color: @color-dark2;
     // border-left: 1px solid @color-dark2;
     // border-right: 1px solid @color-dark2;
     font-weight: bold;
@@ -99,11 +99,11 @@
 }
 .menubar ul ul {
   display: none;
-  background: #454545;
+  background: @color-dark4;
   position: absolute;
   top: 100%;
   min-width: 235px;
-  border: 1px solid #333333;
+  border: 1px solid @color-dark2;
 }
 .menubar .menubar-right ul ul {
   right: 0;
@@ -116,7 +116,7 @@
   height: 35px;
   padding: 0px 10px;
   line-height: 35px;
-  color: #fff;
+  color: @color-light1;
   text-align: left;
 }
 .menubar ul ul ul {
@@ -125,7 +125,7 @@
 }
 .menubar .menubar-left ul ul ul { left: 100%; }
 .menubar .menubar-right ul ul ul { right: 100%; }
-.menubar .divider { border-top: 1px solid #555; }
+.menubar .divider { border-top: 1px solid @color-light4; }
 
 .arrow-right {
   width: 0;
@@ -133,7 +133,7 @@
   margin-top: 12px;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
-  border-left: 5px solid #FFF;
+  border-left: 5px solid @color-light1;
 }
 
 

@@ -12,10 +12,14 @@ const outDir = path.join(rootDir, 'build');
 const vendorJs = [
   'src/assets/libs/createjs.min.js',
   'node_modules/vue/dist/vue.global.prod.js',
-  'node_modules/vue-router/dist/vue-router.global.prod.js'
+  'node_modules/vue-router/dist/vue-router.global.prod.js',
+  'node_modules/element-plus/dist/index.full.min.js',
+  'node_modules/@element-plus/icons-vue/dist/global.iife.min.js'
 ];
 
-const vendorCss = [];
+const vendorCss = [
+  'node_modules/element-plus/dist/index.css'
+];
 
 const vendorFonts = [
   'node_modules/@fortawesome/fontawesome-free/webfonts/*',
@@ -254,7 +258,7 @@ async function buildAppModule(outputPath, options) {
   const rollupModule = await import('rollup');
   const bundle = await rollupModule.rollup({
     input: resolveRoot(appModuleEntry),
-    external: ['vue'],
+    external: ['vue', 'element-plus', '@element-plus/icons-vue'],
     treeshake: {
       moduleSideEffects: true
     },
@@ -283,7 +287,9 @@ async function buildAppModule(outputPath, options) {
       name: 'BehaviorNextApp',
       exports: 'named',
       globals: {
-        vue: 'Vue'
+        vue: 'Vue',
+        'element-plus': 'ElementPlus',
+        '@element-plus/icons-vue': 'ElementPlusIconsVue'
       },
       generatedCode: 'es5',
       compact: production

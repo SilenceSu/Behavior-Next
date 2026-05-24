@@ -1,0 +1,58 @@
+// Element Plus 主题覆盖
+// 只覆盖主色调，背景/文字/边框等由 EP 官方 html.dark class 暗色变量集处理。
+// 深色模式：html.dark（EP 官方）+ [data-theme="dark"]（项目主题）
+// 亮色模式：无 html.dark + [data-theme="light"]
+
+:root {
+  // 主色调映射到项目 accent 色
+  --el-color-primary:        var(--color-accent);
+  --el-color-primary-light-3: color-mix(in srgb, var(--color-accent) 70%, white);
+  --el-color-primary-light-5: color-mix(in srgb, var(--color-accent) 50%, white);
+  --el-color-primary-light-7: color-mix(in srgb, var(--color-accent) 30%, white);
+  --el-color-primary-light-8: color-mix(in srgb, var(--color-accent) 20%, white);
+  --el-color-primary-light-9: color-mix(in srgb, var(--color-accent) 10%, white);
+  --el-color-primary-dark-2:  color-mix(in srgb, var(--color-accent) 80%, black);
+}
+
+// 亮色主题下同步更新主色调（accent 在 light 主题下有不同值）
+[data-theme="light"] {
+  --el-color-primary:        var(--color-accent);
+  --el-color-primary-light-3: color-mix(in srgb, var(--color-accent) 70%, white);
+  --el-color-primary-light-5: color-mix(in srgb, var(--color-accent) 50%, white);
+  --el-color-primary-light-7: color-mix(in srgb, var(--color-accent) 30%, white);
+  --el-color-primary-light-8: color-mix(in srgb, var(--color-accent) 20%, white);
+  --el-color-primary-light-9: color-mix(in srgb, var(--color-accent) 10%, white);
+  --el-color-primary-dark-2:  color-mix(in srgb, var(--color-accent) 80%, black);
+}
+
+// el-table 当前项目高亮行
+.el-table tr.current-project-row td {
+  background-color: color-mix(in srgb, var(--color-accent) 15%, var(--el-bg-color)) !important;
+}
+
+// settings 页卡片最大宽度
+.settings-card {
+  max-width: 640px;
+}
+
+// KeyTable 容器
+.keytable-wrap {
+  border: 1px solid var(--el-border-color);
+  border-radius: var(--el-border-radius-base);
+  overflow: hidden;
+}
+
+.keytable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: var(--el-fill-color-light);
+  border-bottom: 1px solid var(--el-border-color);
+}
+
+.keytable-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--el-text-color-regular);
+}
